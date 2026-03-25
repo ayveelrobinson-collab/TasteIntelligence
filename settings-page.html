@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings · Taste Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── Styrene B @font-face stub ── */
+/* @font-face { font-family:"Styrene B"; src:url("fonts/StyreneB-Regular.woff2") format("woff2"); font-weight:400; }
+   @font-face { font-family:"Styrene B"; src:url("fonts/StyreneB-Medium.woff2")  format("woff2"); font-weight:500; }
+   Falls back to Georgia. */
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0c0b09; --s1:#131109; --s2:#1a1812; --s3:#22201a; --s4:#2a2820;
+  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.04);
+  --amber:#e8a24a; --amber-bg:rgba(232,162,74,0.1); --amber-glow:rgba(232,162,74,0.2);
+  --terra:#c4604a; --terra-bg:rgba(196,96,74,0.1);
+  --sage:#7a9b76;  --sage-bg:rgba(122,155,118,0.1);
+  --slate:#6a8a9f; --slate-bg:rgba(106,138,159,0.1);
+  --plum:#9b6eb5;  --plum-bg:rgba(155,110,181,0.1);
+  --cream:#f0e8d8; --muted:#6b6459; --text:#c8bfb0;
+}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:12px;letter-spacing:-0.01em;display:flex;flex-direction:column}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.03'/%3E%3C/svg%3E");opacity:.5}
+
+/* ── TOP BAR ── */
+.topbar{display:flex;align-items:center;height:48px;flex-shrink:0;
+  background:var(--s1);border-bottom:1px solid var(--border);padding:0 24px;gap:0;z-index:100}
+.tb-logo{font-family:'Styrene B','Georgia',serif;font-size:16px;font-weight:400;
+  color:var(--cream);letter-spacing:.02em;margin-right:32px}
+.tb-logo em{color:var(--amber);font-style:italic}
+.tb-mods{display:flex;margin-right:auto}
+.tb-mod{padding:0 16px;height:48px;display:flex;align-items:center;
+  font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:color .2s}
+.tb-mod:hover{color:var(--text)}
+.tb-mod.settings{color:var(--amber);border-bottom-color:var(--amber)}
+.tb-right{display:flex;align-items:center;gap:10px}
+.tb-avatar{width:28px;height:28px;border-radius:50%;background:var(--amber-bg);
+  border:1px solid var(--amber);display:flex;align-items:center;justify-content:center;
+  font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;color:var(--amber);cursor:pointer}
+.tb-plan-badge{padding:3px 10px;background:var(--amber-bg);border:1px solid var(--amber);
+  font-family:'Poppins',sans-serif;font-size:9px;font-weight:700;color:var(--amber);
+  letter-spacing:.08em;text-transform:uppercase}
+
+/* ── LAYOUT ── */
+.layout{display:grid;grid-template-columns:200px 1fr;flex:1;min-height:0;overflow:hidden}
+
+/* ── SIDEBAR NAV ── */
+.side-nav{background:var(--s1);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;overflow-y:auto;padding:20px 0}
+.side-nav::-webkit-scrollbar{width:3px}
+.side-nav::-webkit-scrollbar-thumb{background:var(--muted)}
+.sn-section{padding:0 12px;margin-bottom:20px}
+.sn-label{font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);padding:0 8px;margin-bottom:6px}
+.sn-item{display:flex;align-items:center;gap:9px;padding:8px 10px;
+  cursor:pointer;border-radius:3px;transition:background .15s,color .15s;
+  font-size:11px;color:var(--text);margin-bottom:1px}
+.sn-item:hover{background:var(--s3)}
+.sn-item.active{background:var(--amber-bg);color:var(--amber)}
+.sn-item.active .sn-icon{color:var(--amber)}
+.sn-icon{font-size:13px;width:16px;text-align:center;flex-shrink:0;color:var(--muted)}
+.sn-badge{margin-left:auto;font-family:'Poppins',sans-serif;font-size:9px;font-weight:700;
+  padding:1px 5px;background:var(--terra-bg);color:var(--terra);border-radius:2px}
+
+/* ── MAIN CONTENT ── */
+.main{overflow-y:auto;overflow-x:hidden;background:var(--bg)}
+.main::-webkit-scrollbar{width:4px}
+.main::-webkit-scrollbar-thumb{background:var(--muted)}
+.content{max-width:860px;padding:32px 36px 60px;margin:0 auto}
+
+/* ── PAGE HEADER ── */
+.page-header{margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.ph-eyebrow{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.ph-title{font-family:'Styrene B','Georgia',serif;font-size:26px;font-weight:400;
+  color:var(--cream);letter-spacing:-.01em;margin-bottom:4px}
+.ph-sub{font-size:11px;color:var(--muted);line-height:1.6}
+.ph-row{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+.ph-stat{text-align:center}
+.ph-stat-num{font-family:'Poppins',sans-serif;font-size:20px;font-weight:700;color:var(--amber);line-height:1}
+.ph-stat-label{font-size:9px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+.ph-stat-div{width:1px;background:var(--border);align-self:stretch}
+
+/* ── SECTION ── */
+.section{margin-bottom:32px}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.sec-title{font-family:'Poppins',sans-serif;font-size:12px;font-weight:700;
+  color:var(--cream);letter-spacing:.02em;text-transform:uppercase}
+.sec-line{flex:1;height:1px;background:var(--border)}
+.sec-action{font-size:10px;color:var(--amber);cursor:pointer;letter-spacing:.06em;white-space:nowrap}
+
+/* ── CARD ── */
+.card{background:var(--s1);border:1px solid var(--border);margin-bottom:6px;overflow:hidden}
+.card-row{display:grid;padding:14px 16px;align-items:center;border-bottom:1px solid var(--border2)}
+.card-row:last-child{border-bottom:none}
+.cr-label{font-size:11px;color:var(--cream);font-weight:500}
+.cr-sub{font-size:10px;color:var(--muted);margin-top:2px;line-height:1.5}
+.cr-right{display:flex;align-items:center;gap:10px;justify-content:flex-end}
+
+/* ── AVATAR LARGE ── */
+.avatar-large{width:56px;height:56px;border-radius:50%;background:var(--amber-bg);
+  border:2px solid var(--amber);display:flex;align-items:center;justify-content:center;
+  font-family:'Poppins',sans-serif;font-size:20px;font-weight:700;color:var(--amber);flex-shrink:0}
+
+/* ── INPUT ── */
+.field-group{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field.full{grid-column:1/-1}
+.field-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.field-input{background:var(--s2);border:1px solid var(--border);padding:8px 10px;
+  font-family:'Inter',sans-serif;font-size:11px;color:var(--text);outline:none;
+  transition:border-color .2s}
+.field-input:focus{border-color:var(--amber)}
+.field-input::placeholder{color:var(--muted)}
+select.field-input option{background:#1a1812}
+
+/* ── TOGGLE ── */
+.toggle-wrap{display:flex;align-items:center;gap:10px}
+.toggle{position:relative;width:36px;height:20px;cursor:pointer;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0}
+.toggle-track{position:absolute;inset:0;background:var(--s3);border:1px solid var(--border);
+  border-radius:10px;transition:all .2s}
+.toggle input:checked + .toggle-track{background:var(--amber);border-color:var(--amber)}
+.toggle-thumb{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
+  background:var(--muted);transition:all .2s}
+.toggle input:checked ~ .toggle-thumb{left:18px;background:var(--bg)}
+.toggle-label{font-size:11px;color:var(--text)}
+
+/* ── SEAT CARDS ── */
+.seat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.seat-card{background:var(--s2);border:1px solid var(--border);padding:14px;
+  position:relative;overflow:hidden;cursor:default;transition:border-color .2s}
+.seat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--sc)}
+.seat-card.active-seat{border-color:var(--amber)}
+.sc-tag{font-size:8px;letter-spacing:.1em;text-transform:uppercase;font-family:'Poppins',sans-serif;
+  font-weight:700;padding:1px 6px;margin-bottom:8px;display:inline-block}
+.sc-name{font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;color:var(--cream);margin-bottom:2px}
+.sc-price{font-family:'Styrene B','Georgia',serif;font-size:20px;color:var(--sc);margin-bottom:6px}
+.sc-features{list-style:none;display:flex;flex-direction:column;gap:3px}
+.sc-features li{font-size:9px;color:var(--muted);display:flex;gap:5px;align-items:flex-start;line-height:1.4}
+.sc-features li::before{content:'→';color:var(--sc);opacity:.6;flex-shrink:0}
+.you-badge{position:absolute;top:8px;right:8px;font-size:8px;font-family:'Poppins',sans-serif;
+  font-weight:700;padding:2px 6px;background:var(--amber);color:var(--bg)}
+
+/* ── TEAM TABLE ── */
+.team-table{width:100%;border-collapse:collapse}
+.team-table th{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  text-align:left;padding:8px 12px;border-bottom:1px solid var(--border)}
+.team-table td{padding:11px 12px;border-bottom:1px solid var(--border2);vertical-align:middle}
+.team-table tr:last-child td{border-bottom:none}
+.team-table tr:hover td{background:var(--s2)}
+.tm-avatar{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-family:'Poppins',sans-serif;font-size:10px;font-weight:700;
+  flex-shrink:0}
+.tm-name{font-size:11px;color:var(--cream);font-weight:500}
+.tm-email{font-size:9px;color:var(--muted)}
+.seat-badge{font-size:8px;padding:2px 7px;font-family:'Poppins',sans-serif;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.seat-badge.analyst{background:var(--slate-bg);color:var(--slate)}
+.seat-badge.power{background:var(--amber-bg);color:var(--amber)}
+.seat-badge.viewer{background:var(--s3);color:var(--muted)}
+.seat-badge.admin{background:var(--sage-bg);color:var(--sage)}
+.module-pills{display:flex;gap:3px;flex-wrap:wrap}
+.mpill{font-size:8px;padding:1px 5px;border:1px solid var(--border);color:var(--muted)}
+.mpill.on{border-color:var(--amber-bg);color:var(--amber);background:var(--amber-bg)}
+.tm-status{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.tm-status.online{background:var(--sage)}
+.tm-status.away{background:var(--amber)}
+.tm-status.offline{background:var(--muted)}
+.tm-action{font-size:10px;color:var(--muted);cursor:pointer;padding:3px 7px;
+  border:1px solid var(--border);transition:all .15s}
+.tm-action:hover{border-color:var(--amber);color:var(--amber)}
+
+/* ── ALERT CONFIG ── */
+.alert-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.alert-row{background:var(--s2);border:1px solid var(--border);padding:12px 14px;
+  display:flex;align-items:center;gap:10px}
+.alert-icon{width:28px;height:28px;border-radius:2px;display:flex;align-items:center;
+  justify-content:center;font-size:12px;flex-shrink:0}
+.ai-surge{background:var(--sage-bg);color:var(--sage)}
+.ai-spike{background:var(--terra-bg);color:var(--terra)}
+.ai-cross{background:var(--amber-bg);color:var(--amber)}
+.ai-new{background:var(--plum-bg);color:var(--plum)}
+.ai-decline{background:var(--slate-bg);color:var(--slate)}
+.alert-info{flex:1;min-width:0}
+.alert-name{font-size:11px;color:var(--cream);font-weight:500;margin-bottom:1px}
+.alert-desc{font-size:9px;color:var(--muted);line-height:1.4}
+.threshold-wrap{display:flex;align-items:center;gap:6px}
+.threshold-label{font-size:9px;color:var(--muted);white-space:nowrap}
+.threshold-input{width:42px;background:var(--s3);border:1px solid var(--border);
+  padding:4px 6px;font-size:10px;color:var(--amber);text-align:center;
+  font-family:'Poppins',sans-serif;font-weight:700;outline:none}
+.threshold-input:focus{border-color:var(--amber)}
+
+/* ── DATA CONNECTIONS ── */
+.conn-card{background:var(--s2);border:1px solid var(--border);padding:14px 16px;
+  display:flex;align-items:center;gap:12px;margin-bottom:6px;transition:border-color .2s}
+.conn-card:hover{border-color:rgba(255,255,255,.12)}
+.conn-icon{width:36px;height:36px;background:var(--s3);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.conn-name{font-size:11px;color:var(--cream);font-weight:500;margin-bottom:2px}
+.conn-meta{font-size:9px;color:var(--muted);line-height:1.5}
+.conn-status{display:flex;align-items:center;gap:5px;font-size:9px;margin-top:3px}
+.cs-dot{width:6px;height:6px;border-radius:50%}
+.cs-dot.connected{background:var(--sage)}
+.cs-dot.pending{background:var(--amber);animation:blink 1.2s infinite}
+.cs-dot.disconnected{background:var(--muted)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.conn-action{margin-left:auto;flex-shrink:0}
+
+/* ── API KEY ── */
+.api-key-wrap{background:var(--s3);border:1px solid var(--border);padding:10px 14px;
+  display:flex;align-items:center;gap:10px;font-family:'Inter',sans-serif;
+  font-size:11px;color:var(--text);letter-spacing:.04em}
+.api-key-val{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-family:'Inter',sans-serif;color:var(--amber)}
+.api-copy{padding:4px 10px;background:none;border:1px solid var(--border);
+  font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s}
+.api-copy:hover{border-color:var(--amber);color:var(--amber)}
+
+/* ── WATCHLIST ── */
+.watch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.watch-chip{background:var(--s2);border:1px solid var(--border);padding:7px 10px;
+  display:flex;align-items:center;gap:6px;cursor:pointer;transition:border-color .15s}
+.watch-chip:hover{border-color:rgba(255,255,255,.14)}
+.wc-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.wc-name{font-size:10px;color:var(--text);flex:1}
+.wc-tag{font-size:8px;padding:1px 4px;font-family:'Poppins',sans-serif;font-weight:700}
+.wc-tag.act{background:var(--sage-bg);color:var(--sage)}
+.wc-tag.watch{background:var(--amber-bg);color:var(--amber)}
+.wc-tag.monitor{background:var(--slate-bg);color:var(--slate)}
+.wc-remove{font-size:10px;color:var(--muted);margin-left:auto;opacity:.5;line-height:1}
+.wc-remove:hover{opacity:1;color:var(--terra)}
+
+/* ── BUTTONS ── */
+.btn{padding:8px 16px;font-family:'Poppins',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;border:none}
+.btn-primary{background:var(--amber);color:var(--bg)}
+.btn-primary:hover{background:#f0b45a}
+.btn-ghost{background:none;border:1px solid var(--border);color:var(--muted)}
+.btn-ghost:hover{border-color:var(--amber);color:var(--amber)}
+.btn-danger{background:none;border:1px solid var(--terra-bg);color:var(--terra)}
+.btn-danger:hover{background:var(--terra-bg)}
+.btn-sm{padding:5px 10px;font-size:9px}
+
+/* ── SELECT PILL ── */
+.select-row{display:flex;gap:4px;flex-wrap:wrap}
+.sel-pill{padding:5px 12px;background:var(--s2);border:1px solid var(--border);
+  font-size:10px;color:var(--muted);cursor:pointer;transition:all .15s}
+.sel-pill:hover{border-color:rgba(255,255,255,.12)}
+.sel-pill.active{background:var(--amber-bg);border-color:var(--amber);color:var(--amber)}
+
+/* ── GEO PILLS ── */
+.geo-row{display:flex;flex-wrap:wrap;gap:4px}
+.geo-pill{padding:4px 10px;background:var(--s2);border:1px solid var(--border);
+  font-size:9px;color:var(--muted);cursor:pointer;transition:all .15s}
+.geo-pill.active{background:var(--slate-bg);border-color:var(--slate);color:var(--slate)}
+.geo-pill:hover{border-color:rgba(255,255,255,.12)}
+
+/* ── SAVE BAR ── */
+.save-bar{position:sticky;bottom:0;background:var(--s1);border-top:1px solid var(--border);
+  padding:12px 36px;display:flex;align-items:center;gap:12px;z-index:10}
+.save-note{font-size:10px;color:var(--muted);flex:1}
+.save-note em{color:var(--amber)}
+
+/* ── STATUS BAR ── */
+.status-bar{height:26px;flex-shrink:0;background:var(--s1);border-top:1px solid var(--border);
+  display:flex;align-items:center;padding:0 16px;gap:16px}
+.sb-item{font-size:9px;color:var(--muted);letter-spacing:.08em;display:flex;align-items:center;gap:5px}
+.sb-dot{width:5px;height:5px;border-radius:50%;background:var(--sage)}
+.sb-sep{width:1px;height:12px;background:var(--border)}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="tb-logo">Taste <em>Intelligence</em></div>
+  <nav class="tb-mods">
+    <div class="tb-mod">Perception</div>
+    <div class="tb-mod">Validation</div>
+    <div class="tb-mod">Foresight</div>
+    <div class="tb-mod">Creation</div>
+    <div class="tb-mod settings">Settings</div>
+  </nav>
+  <div class="tb-right">
+    <div class="tb-plan-badge">Enterprise · Admin</div>
+    <div class="tb-avatar">JM</div>
+  </div>
+</header>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDE NAV -->
+  <nav class="side-nav">
+    <div class="sn-section">
+      <div class="sn-label">Account</div>
+      <div class="sn-item active" onclick="showSection('profile')">
+        <span class="sn-icon">◉</span>Profile & Preferences
+      </div>
+      <div class="sn-item" onclick="showSection('alerts')">
+        <span class="sn-icon">◈</span>Alert Settings
+        <span class="sn-badge">7</span>
+      </div>
+      <div class="sn-item" onclick="showSection('watchlist')">
+        <span class="sn-icon">◇</span>My Watchlist
+      </div>
+    </div>
+    <div class="sn-section">
+      <div class="sn-label">Team & Access</div>
+      <div class="sn-item" onclick="showSection('team')">
+        <span class="sn-icon">⊕</span>Team Members
+      </div>
+      <div class="sn-item" onclick="showSection('seats')">
+        <span class="sn-icon">▣</span>Seat Management
+      </div>
+    </div>
+    <div class="sn-section">
+      <div class="sn-label">Data & Integrations</div>
+      <div class="sn-item" onclick="showSection('connections')">
+        <span class="sn-icon">⇄</span>Data Connections
+      </div>
+      <div class="sn-item" onclick="showSection('api')">
+        <span class="sn-icon">{ }</span>API Keys
+      </div>
+    </div>
+    <div class="sn-section">
+      <div class="sn-label">Security</div>
+      <div class="sn-item" onclick="showSection('security')">
+        <span class="sn-icon">⬡</span>Security & SSO
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main" id="mainContent">
+    <div class="content" id="contentArea"></div>
+  </main>
+
+</div>
+
+<footer class="status-bar">
+  <div class="sb-item"><div class="sb-dot"></div>Atlas v2.1 connected</div>
+  <div class="sb-sep"></div>
+  <div class="sb-item">Enterprise Plan · 8 seats active</div>
+  <div class="sb-sep"></div>
+  <div class="sb-item">Contract renewal: Oct 2025</div>
+  <div class="sb-sep"></div>
+  <div class="sb-item" style="margin-left:auto">Powered by Taste Intelligence</div>
+</footer>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+
+const TEAM = [
+  { initials:'JM', name:'Jordan Mills',    email:'jordan@chiptlgroup.com', seat:'admin',   modules:['P','V','F','C'], status:'online',  color:'#e8a24a', last:'Now' },
+  { initials:'SR', name:'Sofia Reyes',     email:'s.reyes@chiptlgroup.com', seat:'analyst', modules:['P','V','F','C'], status:'online',  color:'#7a9b76', last:'2m ago' },
+  { initials:'TK', name:'Tom Keller',      email:'t.keller@chiptlgroup.com', seat:'power',  modules:['P','V','F','C'], status:'away',    color:'#6a8a9f', last:'18m ago' },
+  { initials:'AW', name:'Ava Wong',        email:'a.wong@chiptlgroup.com',  seat:'analyst', modules:['P','V'],         status:'online',  color:'#9b6eb5', last:'5m ago' },
+  { initials:'DL', name:'Derek Lowry',     email:'d.lowry@chiptlgroup.com', seat:'viewer',  modules:['P','F'],         status:'offline', color:'#c4604a', last:'3h ago' },
+  { initials:'MP', name:'Maya Patel',      email:'m.patel@chiptlgroup.com', seat:'viewer',  modules:['F'],             status:'away',    color:'#d4845a', last:'1h ago' },
+  { initials:'BH', name:'Ben Hartley',     email:'b.hartley@chiptlgroup.com',seat:'analyst', modules:['P','V','F'],    status:'offline', color:'#8a9b76', last:'Yesterday' },
+  { initials:'CJ', name:'Carmen Jimenez', email:'c.jimenez@chiptlgroup.com',seat:'power',   modules:['P','V','F','C'], status:'online',  color:'#7a8a9f', last:'12m ago' },
+];
+
+const MODULE_NAMES = { P:'Perception', V:'Validation', F:'Foresight', C:'Creation' };
+
+const ALERTS = [
+  { type:'surge',   icon:'↑', cls:'ai-surge', name:'Ingredient Surge',      desc:'Signal rises rapidly above baseline', threshold:80, on:true  },
+  { type:'spike',   icon:'⚡', cls:'ai-spike', name:'Momentum Spike',        desc:'Sudden short-term acceleration',       threshold:75, on:true  },
+  { type:'cross',   icon:'×', cls:'ai-cross', name:'Channel Crossover',      desc:'Trend moves into a new market channel',threshold:70, on:true  },
+  { type:'new',     icon:'★', cls:'ai-new',   name:'New Signal Detected',    desc:'First-time appearance in data',        threshold:60, on:false },
+  { type:'decline', icon:'↓', cls:'ai-decline',name:'Declining Signal',     desc:'Trend falling below momentum floor',   threshold:65, on:true  },
+];
+
+const CONNECTIONS = [
+  { icon:'🍽️', name:'Crave Platform',        meta:'Operator menu data · 847K items indexed',  status:'connected',    lastSync:'2 minutes ago' },
+  { icon:'📡', name:'Capture Event Feed',     meta:'12 active events · Live signal ingestion', status:'connected',    lastSync:'Real-time'     },
+  { icon:'👤', name:'Meal Ticket Profiles',   meta:'48,291 active consumer profiles',          status:'connected',    lastSync:'15 minutes ago'},
+  { icon:'🏪', name:'POS Integration (Toast)', meta:'2,340 restaurant locations',              status:'connected',    lastSync:'Hourly'        },
+  { icon:'📦', name:'Retail SKU Feed',        meta:'Kroger, Walmart, Whole Foods · 1.2M SKUs', status:'pending',     lastSync:'Syncing…'      },
+  { icon:'🔗', name:'Sysco Distributor API',  meta:'Foodservice distribution data',            status:'disconnected', lastSync:'Not connected' },
+];
+
+const WATCHLIST = [
+  { name:'Yuzu Kosho',     tag:'act',     c:'#c4604a' },
+  { name:'Black Garlic',   tag:'act',     c:'#e8a24a' },
+  { name:'Tepache',        tag:'watch',   c:'#9b6eb5' },
+  { name:'Koji',           tag:'watch',   c:'#e8a24a' },
+  { name:'Calamansi',      tag:'watch',   c:'#7a9b76' },
+  { name:'Ube',            tag:'watch',   c:'#9b6eb5' },
+  { name:'Calabrian Chili',tag:'monitor', c:'#6a8a9f' },
+  { name:'Brown Butter',   tag:'monitor', c:'#d4845a' },
+  { name:'Za\'atar',       tag:'monitor', c:'#6a8a9f' },
+  { name:'Nduja',          tag:'monitor', c:'#c4604a' },
+  { name:'Aquafaba',       tag:'monitor', c:'#6b6459' },
+  { name:'Teff',           tag:'monitor', c:'#6b6459' },
+];
+
+// ── SECTION RENDERERS ─────────────────────────────────────────────────────────
+
+function renderProfile() {
+  return `
+    <div class="page-header">
+      <div class="ph-eyebrow">Settings · Account Admin</div>
+      <div class="ph-title">Profile &amp; Preferences</div>
+      <div class="ph-sub">Manage your identity, default dashboard behaviour, and notification delivery.</div>
+    </div>
+
+    <!-- Profile -->
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">Profile</div><div class="sec-line"></div></div>
+      <div class="card">
+        <div class="card-row" style="grid-template-columns:auto 1fr auto">
+          <div class="avatar-large">JM</div>
+          <div style="padding:0 16px">
+            <div style="font-size:14px;font-family:'Poppins',sans-serif;font-weight:700;color:var(--cream);margin-bottom:2px">Jordan Mills</div>
+            <div style="font-size:10px;color:var(--muted)">Account Admin · Enterprise Plan</div>
+            <div style="font-size:10px;color:var(--amber);margin-top:4px">jordan@chiptlgroup.com</div>
+          </div>
+          <button class="btn btn-ghost btn-sm">Change Photo</button>
+        </div>
+        <div class="card-row" style="display:block;padding:18px 16px">
+          <div class="field-group">
+            <div class="field"><div class="field-label">First Name</div><input class="field-input" value="Jordan"></div>
+            <div class="field"><div class="field-label">Last Name</div><input class="field-input" value="Mills"></div>
+            <div class="field"><div class="field-label">Job Function</div>
+              <select class="field-input">
+                <option>Strategy &amp; Insights</option>
+                <option>R&amp;D / Innovation</option>
+                <option>Product / Ops</option>
+                <option>Executive</option>
+                <option>Account Admin</option>
+              </select>
+            </div>
+            <div class="field"><div class="field-label">Company</div><input class="field-input" value="Chipotle Group"></div>
+            <div class="field full"><div class="field-label">Email</div><input class="field-input" value="jordan@chiptlgroup.com"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard Preferences -->
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">Dashboard Preferences</div><div class="sec-line"></div></div>
+      <div class="card">
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div>
+            <div class="cr-label">Default Landing Module</div>
+            <div class="cr-sub">The module that opens when you log in</div>
+          </div>
+          <div class="select-row" id="modPills">
+            ${['Perception','Validation','Foresight','Creation'].map((m,i) =>
+              `<div class="sel-pill ${i===0?'active':''}" onclick="setActive(this,'modPills')">${m}</div>`
+            ).join('')}
+          </div>
+        </div>
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div>
+            <div class="cr-label">Default Time Period</div>
+            <div class="cr-sub">Applied to all charts and trend tables on load</div>
+          </div>
+          <div class="select-row" id="timePills">
+            ${['30 days','90 days','6 months','12 months'].map((t,i) =>
+              `<div class="sel-pill ${i===0?'active':''}" onclick="setActive(this,'timePills')">${t}</div>`
+            ).join('')}
+          </div>
+        </div>
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div>
+            <div class="cr-label">Default Geography</div>
+            <div class="cr-sub">Markets pre-loaded when Perception opens</div>
+          </div>
+          <div class="geo-row" id="geoPills">
+            ${['United States','Northeast','Southeast','Midwest','Southwest','West Coast','Texas'].map((g,i) =>
+              `<div class="geo-pill ${i===0?'active':''}" onclick="toggleGeo(this)">${g}</div>`
+            ).join('')}
+          </div>
+        </div>
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div>
+            <div class="cr-label">Data Density</div>
+            <div class="cr-sub">How much information is shown per panel</div>
+          </div>
+          <div class="select-row" id="densityPills">
+            ${['Compact','Comfortable','Spacious'].map((d,i) =>
+              `<div class="sel-pill ${i===1?'active':''}" onclick="setActive(this,'densityPills')">${d}</div>`
+            ).join('')}
+          </div>
+        </div>
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div>
+            <div class="cr-label">Taste Archetype</div>
+            <div class="cr-sub">Your personal Foodie Profile archetype — bridges the B2B platform with Meal Ticket consumer data</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;color:var(--amber)">The Explorer</span>
+            <button class="btn btn-ghost btn-sm">Retake Quiz</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Delivery -->
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">Notification Delivery</div><div class="sec-line"></div></div>
+      <div class="card">
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div><div class="cr-label">In-App Alerts</div><div class="cr-sub">Notifications inside the dashboard</div></div>
+          <label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div><div class="cr-label">Email Digest</div><div class="cr-sub">Daily summary of new signals and trend movements</div></div>
+          <label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div><div class="cr-label">Slack Notifications</div><div class="cr-sub">Push alerts to your connected Slack workspace</div></div>
+          <label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div>
+            <div class="cr-label">Digest Frequency</div>
+            <div class="cr-sub">How often email summaries are sent</div>
+          </div>
+          <div class="select-row" id="freqPills">
+            ${['Real-time','Daily','Weekly'].map((f,i) =>
+              `<div class="sel-pill ${i===1?'active':''}" onclick="setActive(this,'freqPills')">${f}</div>`
+            ).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="save-bar">
+      <div class="save-note">Unsaved changes in <em>Profile</em> and <em>Preferences</em></div>
+      <button class="btn btn-ghost">Discard</button>
+      <button class="btn btn-primary">Save Changes</button>
+    </div>
+  `;
+}
+
+function renderAlerts() {
+  return `
+    <div class="page-header">
+      <div class="ph-eyebrow">Settings · Alert Configuration</div>
+      <div class="ph-title">Alert &amp; Notification Settings</div>
+      <div class="ph-sub">Configure which signal types trigger alerts, set momentum thresholds, and choose delivery channels per alert type.</div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">Signal Alert Types</div><div class="sec-line"></div><div class="sec-action" onclick="">Enable All</div></div>
+      <div class="alert-grid">
+        ${ALERTS.map(a => `
+          <div class="alert-row">
+            <div class="alert-icon ${a.cls}">${a.icon}</div>
+            <div class="alert-info">
+              <div class="alert-name">${a.name}</div>
+              <div class="alert-desc">${a.desc}</div>
+            </div>
+            <div class="threshold-wrap">
+              <div class="threshold-label">Min score</div>
+              <input class="threshold-input" value="${a.threshold}" type="number" min="0" max="100">
+            </div>
+            <label class="toggle"><input type="checkbox" ${a.on?'checked':''}><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">Geo Market Filters</div><div class="sec-line"></div></div>
+      <div class="card">
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div>
+            <div class="cr-label">Alert Markets</div>
+            <div class="cr-sub">Only send alerts for trends detected in these markets. Leave blank for all markets.</div>
+          </div>
+        </div>
+        <div class="card-row" style="display:block;padding:14px 16px">
+          <div class="geo-row">
+            ${['All Markets','Northeast','Southeast','Midwest','Southwest','West Coast','Texas','New York','Los Angeles','Chicago','Austin','Miami'].map((g,i) =>
+              `<div class="geo-pill ${i<3?'active':''}" onclick="toggleGeo(this)">${g}</div>`
+            ).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">Scheduled Reports</div><div class="sec-line"></div></div>
+      <div class="card">
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div><div class="cr-label">Weekly Foresight Brief</div><div class="cr-sub">Auto-generated executive briefing every Monday 8am</div></div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:10px;color:var(--sage)">● Active</span>
+            <label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+          </div>
+        </div>
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div><div class="cr-label">Daily Trend Digest</div><div class="cr-sub">Top 5 rising signals emailed at 7am</div></div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:10px;color:var(--sage)">● Active</span>
+            <label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+          </div>
+        </div>
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div><div class="cr-label">Monthly Portfolio Review</div><div class="cr-sub">Portfolio positioning vs. trend shifts — 1st of month</div></div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:10px;color:var(--muted)">○ Inactive</span>
+            <label class="toggle"><input type="checkbox"><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="save-bar">
+      <div class="save-note">Changes auto-save when you toggle alerts</div>
+      <button class="btn btn-primary">Save All</button>
+    </div>
+  `;
+}
+
+function renderTeam() {
+  const seatBadge = s => {
+    const map = {admin:'admin',analyst:'analyst',power:'power',viewer:'viewer'};
+    const labels = {admin:'Admin',analyst:'Analyst',power:'Power User',viewer:'Viewer'};
+    return `<span class="seat-badge ${map[s]}">${labels[s]}</span>`;
+  };
+  const statusMap = {online:'online',away:'away',offline:'offline'};
+  const mods = m => m.map(x=>`<span class="mpill on" title="${MODULE_NAMES[x]}">${x}</span>`).join('');
+
+  return `
+    <div class="page-header">
+      <div class="ph-eyebrow">Settings · Team &amp; Access</div>
+      <div class="ph-title">Team Members</div>
+      <div class="ph-sub">8 seats active on your Enterprise plan. Manage access, seat types, and module permissions.</div>
+      <div class="ph-row">
+        <div style="display:flex;gap:24px">
+          <div class="ph-stat"><div class="ph-stat-num">8</div><div class="ph-stat-label">Total Seats</div></div>
+          <div class="ph-stat-div"></div>
+          <div class="ph-stat"><div class="ph-stat-num" style="color:var(--sage)">5</div><div class="ph-stat-label">Online Now</div></div>
+          <div class="ph-stat-div"></div>
+          <div class="ph-stat"><div class="ph-stat-num" style="color:var(--slate)">2</div><div class="ph-stat-label">Power Users</div></div>
+          <div class="ph-stat-div"></div>
+          <div class="ph-stat"><div class="ph-stat-num" style="color:var(--amber)">3</div><div class="ph-stat-label">Analysts</div></div>
+        </div>
+        <button class="btn btn-primary btn-sm">+ Invite Member</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">All Members</div><div class="sec-line"></div></div>
+      <div class="card">
+        <table class="team-table">
+          <thead>
+            <tr>
+              <th>Member</th>
+              <th>Seat Type</th>
+              <th>Modules</th>
+              <th>Status</th>
+              <th>Last Active</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            ${TEAM.map(m => `
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div class="tm-avatar" style="background:${m.color}22;color:${m.color};border:1px solid ${m.color}44">${m.initials}</div>
+                    <div>
+                      <div class="tm-name">${m.name}</div>
+                      <div class="tm-email">${m.email}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>${seatBadge(m.seat)}</td>
+                <td><div class="module-pills">${mods(m.modules)}</div></td>
+                <td><div style="display:flex;align-items:center;gap:5px"><div class="tm-status ${statusMap[m.status]}"></div><span style="font-size:9px;color:var(--muted)">${m.status}</span></div></td>
+                <td style="font-size:10px;color:var(--muted)">${m.last}</td>
+                <td><div class="cr-right"><button class="tm-action">Edit</button><button class="tm-action" style="color:var(--terra);border-color:var(--terra-bg)">Remove</button></div></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="save-bar">
+      <div class="save-note">Changes to team access take effect immediately</div>
+      <button class="btn btn-ghost">Export Roster</button>
+      <button class="btn btn-primary">+ Invite Member</button>
+    </div>
+  `;
+}
+
+function renderSeats() {
+  const seats = [
+    { name:'Executive Viewer', price:'$1,500/seat/yr', c:'var(--muted)', cbg:'rgba(107,100,89,0.1)',
+      features:['Read-only dashboards','Foresight briefings','Export to PDF'], count:2, you:false },
+    { name:'Analyst',          price:'$8,000/seat/yr', c:'var(--slate)', cbg:'var(--slate-bg)',
+      features:['Full analytics access','Validation scoring','API read access'], count:3, you:false },
+    { name:'Power User',       price:'$15,000/seat/yr',c:'var(--amber)', cbg:'var(--amber-bg)',
+      features:['Advanced modeling','Full API access','Creation module','Export raw data'], count:2, you:true },
+  ];
+  return `
+    <div class="page-header">
+      <div class="ph-eyebrow">Settings · Seat Management</div>
+      <div class="ph-title">Seat &amp; Module Access</div>
+      <div class="ph-sub">Your Enterprise plan includes 10 seats. 8 are currently active. Seat type determines which modules and features each team member can access.</div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">Your Seat</div><div class="sec-line"></div></div>
+      <div class="seat-grid">
+        ${seats.map(s => `
+          <div class="seat-card ${s.you?'active-seat':''}" style="--sc:${s.c}">
+            ${s.you?'<div class="you-badge">YOUR SEAT</div>':''}
+            <div class="sc-tag" style="background:${s.cbg};color:${s.c}">${s.count} Active</div>
+            <div class="sc-name">${s.name}</div>
+            <div class="sc-price">${s.price}</div>
+            <ul class="sc-features">
+              ${s.features.map(f=>`<li>${f}</li>`).join('')}
+            </ul>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">Module Access by Seat</div><div class="sec-line"></div></div>
+      <div class="card">
+        ${[
+          ['Module',        'Exec Viewer','Analyst','Power User'],
+          ['Perception',     '✓ Read',    '✓ Full', '✓ Full'  ],
+          ['Validation',     '✓ Read',    '✓ Full', '✓ Full'  ],
+          ['Foresight',      '✓ Read',    '✓ Full', '✓ Full'  ],
+          ['Creation',       '—',         '—',      '✓ Full'  ],
+          ['API Access',     '—',         'Read',   'Read/Write'],
+          ['Raw Data Export','—',         '—',      '✓'       ],
+          ['Admin Controls', '—',         '—',      'Admin only'],
+        ].map((row, i) => `
+          <div class="card-row" style="grid-template-columns:1fr 1fr 1fr 1fr;${i===0?'opacity:.5':''}">
+            <div style="font-size:${i===0?'9px':'11px'};color:${i===0?'var(--muted)':'var(--cream)'};font-weight:${i===0?'400':'500'};letter-spacing:${i===0?'.1em':'0'};text-transform:${i===0?'uppercase':'none'}">${row[0]}</div>
+            ${row.slice(1).map(v=>`<div style="font-size:${i===0?'9px':'10px'};color:${v==='✓ Full'?'var(--sage)':v==='—'?'var(--muted)':v.includes('✓')?'var(--amber)':'var(--text)'};letter-spacing:${i===0?'.08em':'0'}">${v}</div>`).join('')}
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">Seat Usage</div><div class="sec-line"></div></div>
+      <div class="card">
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div>
+            <div class="cr-label">Seats Used</div>
+            <div class="cr-sub">8 of 10 seats allocated · 2 available</div>
+          </div>
+          <div style="display:flex;gap:4px;align-items:center">
+            ${Array.from({length:10},(_,i)=>`<div style="width:20px;height:8px;background:${i<8?'var(--amber)':'var(--s3)'};border:1px solid ${i<8?'var(--amber)':'var(--border)'}"></div>`).join('')}
+          </div>
+        </div>
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div><div class="cr-label">Need More Seats?</div><div class="cr-sub">Contact your account manager or request additional seats below</div></div>
+          <button class="btn btn-ghost btn-sm">Request Seats</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderConnections() {
+  return `
+    <div class="page-header">
+      <div class="ph-eyebrow">Settings · Data &amp; Integrations</div>
+      <div class="ph-title">Data Connections</div>
+      <div class="ph-sub">Manage the data sources feeding Atlas. All connections are encrypted in transit and at rest. PII is anonymised before ingestion.</div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">Active Connections</div><div class="sec-line"></div><div class="sec-action">+ Add Connection</div></div>
+      ${CONNECTIONS.map(c => `
+        <div class="conn-card">
+          <div class="conn-icon">${c.icon}</div>
+          <div style="flex:1;min-width:0">
+            <div class="conn-name">${c.name}</div>
+            <div class="conn-meta">${c.meta}</div>
+            <div class="conn-status">
+              <div class="cs-dot ${c.status}"></div>
+              <span style="color:${c.status==='connected'?'var(--sage)':c.status==='pending'?'var(--amber)':'var(--muted)'}">${c.status==='connected'?'Connected':c.status==='pending'?'Syncing…':'Not connected'}</span>
+              <span style="color:var(--muted)"> · Last sync: ${c.lastSync}</span>
+            </div>
+          </div>
+          <div class="conn-action">
+            ${c.status==='connected'
+              ? `<button class="btn btn-ghost btn-sm">Configure</button>`
+              : c.status==='pending'
+              ? `<button class="btn btn-ghost btn-sm">Cancel</button>`
+              : `<button class="btn btn-primary btn-sm">Connect</button>`
+            }
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">Data Privacy Controls</div><div class="sec-line"></div></div>
+      <div class="card">
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div><div class="cr-label">Contribute to Platform Benchmarks</div><div class="cr-sub">Anonymised aggregate data improves prediction accuracy for all clients. No raw data is shared.</div></div>
+          <label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div><div class="cr-label">Consumer PII Anonymisation</div><div class="cr-sub">Strip all personally identifiable information before Meal Ticket data enters Atlas</div></div>
+          <label class="toggle"><input type="checkbox" checked disabled><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div><div class="cr-label">Data Retention Period</div><div class="cr-sub">How long your raw ingested data is stored before rolling deletion</div></div>
+          <div class="select-row" id="retentionPills">
+            ${['12 months','24 months','36 months'].map((r,i) =>
+              `<div class="sel-pill ${i===1?'active':''}" onclick="setActive(this,'retentionPills')">${r}</div>`
+            ).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderAPI() {
+  return `
+    <div class="page-header">
+      <div class="ph-eyebrow">Settings · API Keys</div>
+      <div class="ph-title">API Access</div>
+      <div class="ph-sub">Power User and Analyst seats can access the Taste Intelligence API. Keys are scoped to your seat's permission level.</div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">Your API Keys</div><div class="sec-line"></div><div class="sec-action" onclick="">+ Generate New Key</div></div>
+      <div class="card">
+        <div class="card-row" style="display:block;padding:14px 16px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div><div class="cr-label">Production Key</div><div class="cr-sub" style="margin-top:2px">Full read/write · Created Mar 3, 2025</div></div>
+            <div style="display:flex;gap:6px">
+              <button class="btn btn-ghost btn-sm">Rotate</button>
+              <button class="btn btn-danger btn-sm">Revoke</button>
+            </div>
+          </div>
+          <div class="api-key-wrap">
+            <span class="api-key-val">ti_prod_••••••••••••••••••••••••••••••••••••••••••••••••4f8a</span>
+            <button class="api-copy" onclick="this.textContent='Copied ✓';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+            <button class="api-copy" onclick="this.textContent='Revealed';this.closest('.api-key-wrap').querySelector('.api-key-val').textContent='ti_prod_a4b8c2d1e9f3a0b7c4d8e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0'">Reveal</button>
+          </div>
+        </div>
+        <div class="card-row" style="display:block;padding:14px 16px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div><div class="cr-label">Development Key</div><div class="cr-sub" style="margin-top:2px">Read-only · Created Jan 18, 2025</div></div>
+            <div style="display:flex;gap:6px">
+              <button class="btn btn-ghost btn-sm">Rotate</button>
+              <button class="btn btn-danger btn-sm">Revoke</button>
+            </div>
+          </div>
+          <div class="api-key-wrap">
+            <span class="api-key-val">ti_dev_••••••••••••••••••••••••••••••••••••••••••••••••••2c3b</span>
+            <button class="api-copy" onclick="this.textContent='Copied ✓';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+            <button class="api-copy">Reveal</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">API Permissions</div><div class="sec-line"></div></div>
+      <div class="card">
+        ${[
+          ['Perception signals — read',      true ],
+          ['Validation scoring — read/write', true ],
+          ['Foresight forecasts — read',      true ],
+          ['Creation concepts — read/write',  true ],
+          ['Atlas graph — read',              true ],
+          ['Team management — write',         false],
+          ['Billing — read',                  false],
+        ].map(([label, on]) => `
+          <div class="card-row" style="grid-template-columns:1fr auto">
+            <div class="cr-label" style="font-size:11px;color:${on?'var(--cream)':'var(--muted)'}">${label}</div>
+            <span style="font-size:9px;font-family:'Poppins',sans-serif;font-weight:700;padding:2px 7px;
+              background:${on?'var(--sage-bg)':'var(--s3)'};color:${on?'var(--sage)':'var(--muted)'}">
+              ${on?'ALLOWED':'DENIED'}
+            </span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">API Usage (Last 30 Days)</div><div class="sec-line"></div></div>
+      <div class="card">
+        <div class="card-row" style="grid-template-columns:repeat(4,1fr)">
+          ${[['4,821','Total Calls'],['98.9%','Uptime'],['142ms','Avg Response'],['0','Errors']].map(([v,l])=>`
+            <div style="text-align:center">
+              <div style="font-family:'Poppins',sans-serif;font-size:20px;font-weight:700;color:var(--amber)">${v}</div>
+              <div style="font-size:9px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:3px">${l}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderWatchlist() {
+  return `
+    <div class="page-header">
+      <div class="ph-eyebrow">Settings · Watchlist</div>
+      <div class="ph-title">My Watchlist</div>
+      <div class="ph-sub">Ingredients and trends you're personally tracking. Status tags control alert urgency — ACT means move now, WATCH means monitor closely, MONITOR means periodic check-in.</div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">Tracked Signals</div><div class="sec-line"></div><div class="sec-action">+ Add from Perception</div></div>
+      <div class="watch-grid">
+        ${WATCHLIST.map(w => `
+          <div class="watch-chip">
+            <div class="wc-dot" style="background:${w.c}"></div>
+            <div class="wc-name">${w.name}</div>
+            <span class="wc-tag ${w.tag}">${w.tag.toUpperCase()}</span>
+            <div class="wc-remove" onclick="this.closest('.watch-chip').remove()">✕</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">Alert Thresholds for Watchlist</div><div class="sec-line"></div></div>
+      <div class="card">
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div><div class="cr-label">Notify me when a watched signal reaches ACT status</div><div class="cr-sub">Push immediately via in-app and email</div></div>
+          <label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div><div class="cr-label">Weekly watchlist digest</div><div class="cr-sub">Summary of all watched signal movements every Monday</div></div>
+          <label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="save-bar">
+      <div class="save-note">Watchlist changes save automatically</div>
+      <button class="btn btn-ghost">Export Watchlist</button>
+      <button class="btn btn-primary">+ Add Signals</button>
+    </div>
+  `;
+}
+
+function renderSecurity() {
+  return `
+    <div class="page-header">
+      <div class="ph-eyebrow">Settings · Security</div>
+      <div class="ph-title">Security &amp; SSO</div>
+      <div class="ph-sub">Manage authentication, session security, and audit logging for your Enterprise account.</div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">Authentication</div><div class="sec-line"></div></div>
+      <div class="card">
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div><div class="cr-label">Single Sign-On (SSO)</div><div class="cr-sub">Okta · Connected · All team members must use SSO</div></div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:10px;color:var(--sage)">● Active</span>
+            <button class="btn btn-ghost btn-sm">Configure</button>
+          </div>
+        </div>
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div><div class="cr-label">Two-Factor Authentication</div><div class="cr-sub">Required for all Admin and Power User seats</div></div>
+          <label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="card-row" style="grid-template-columns:1fr auto">
+          <div><div class="cr-label">Session Timeout</div><div class="cr-sub">Auto-logout after inactivity</div></div>
+          <div class="select-row" id="sessionPills">
+            ${['30 min','1 hour','4 hours','8 hours'].map((s,i) =>
+              `<div class="sel-pill ${i===2?'active':''}" onclick="setActive(this,'sessionPills')">${s}</div>`
+            ).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">Active Sessions</div><div class="sec-line"></div><div class="sec-action" style="color:var(--terra)">Revoke All</div></div>
+      <div class="card">
+        ${[
+          ['Chrome · MacBook Pro','San Francisco, CA','Now · This device'],
+          ['Safari · iPhone 15',  'San Francisco, CA','2 hours ago'],
+          ['Chrome · Windows PC', 'Chicago, IL',      '3 days ago'],
+        ].map(([device,loc,time]) => `
+          <div class="card-row" style="grid-template-columns:1fr auto">
+            <div>
+              <div class="cr-label" style="font-size:11px">${device}</div>
+              <div class="cr-sub">${loc} · ${time}</div>
+            </div>
+            <button class="btn btn-ghost btn-sm" style="${time.includes('Now')?'opacity:.4;cursor:default':''}">Revoke</button>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head"><div class="sec-title">Audit Log</div><div class="sec-line"></div><div class="sec-action">Export Full Log</div></div>
+      <div class="card">
+        ${[
+          ['Jordan Mills','Exported Foresight Brief (Q2 2025)','Today, 9:14am'],
+          ['Sofia Reyes','Ran Concept Score: Yuzu Kosho Chicken','Today, 8:51am'],
+          ['Tom Keller','Generated 5 concepts in Creation module','Yesterday, 4:23pm'],
+          ['Jordan Mills','Added Tepache to Watchlist','Yesterday, 2:10pm'],
+          ['Carmen Jimenez','Connected Retail SKU Feed','2 days ago'],
+          ['Jordan Mills','Invited Ben Hartley (Analyst seat)','3 days ago'],
+        ].map(([user,action,time]) => `
+          <div class="card-row" style="grid-template-columns:auto 1fr auto">
+            <div style="font-size:10px;font-family:'Poppins',sans-serif;font-weight:600;color:var(--amber);width:110px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${user}</div>
+            <div style="font-size:10px;color:var(--text);padding:0 12px">${action}</div>
+            <div style="font-size:9px;color:var(--muted);white-space:nowrap">${time}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// ── NAV + INIT ────────────────────────────────────────────────────────────────
+
+const SECTIONS = { profile:renderProfile, alerts:renderAlerts, team:renderTeam,
+  seats:renderSeats, connections:renderConnections, api:renderAPI,
+  watchlist:renderWatchlist, security:renderSecurity };
+
+function showSection(name) {
+  document.querySelectorAll('.sn-item').forEach(x => x.classList.remove('active'));
+  event && event.currentTarget && event.currentTarget.classList.add('active');
+  document.getElementById('contentArea').innerHTML = (SECTIONS[name] || renderProfile)();
+  document.querySelector('.main').scrollTo(0,0);
+}
+
+function setActive(el, groupId) {
+  document.getElementById(groupId).querySelectorAll('.sel-pill').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function toggleGeo(el) { el.classList.toggle('active'); }
+
+// Init
+document.getElementById('contentArea').innerHTML = renderProfile();
+</script>
+</body>
+</html>
