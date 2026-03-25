@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Reference Index · Taste Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── STYRENE B font-face: add your licensed .woff2 files or link via Adobe Fonts.
+   Falls back to Georgia until loaded. Example:
+   @font-face { font-family: "Styrene B"; src: url("fonts/StyreneB-Regular.woff2") format("woff2"); font-weight:400; }
+   @font-face { font-family: "Styrene B"; src: url("fonts/StyreneB-Medium.woff2")  format("woff2"); font-weight:500; }
+*/
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#faf8f4;--s1:#ffffff;--s2:#f4f0ea;--s3:#ede8df;
+  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.05);
+  --amber:#c07820;--amber-bg:rgba(192,120,32,0.08);--amber-light:#e8a24a;
+  --terra:#b04030;--sage:#4a7a46;--slate:#3a6a7f;--plum:#6a3e8a;
+  --cream:#2a2420;--muted:#7a7068;--text:#3d3730;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:12px;letter-spacing:-0.01em;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.025'/%3E%3C/svg%3E");opacity:.6}
+
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:100;background:rgba(250,248,244,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:52px}
+.tb-logo{font-family:'Styrene B','Georgia',serif;font-size:17px;font-weight:300;color:var(--cream);letter-spacing:.04em}
+.tb-logo em{color:var(--amber);font-style:italic}
+.tb-tag{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.tb-nav{display:flex;gap:0}
+.tb-nav a{padding:0 14px;height:52px;display:flex;align-items:center;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:2px solid transparent;transition:color .2s}
+.tb-nav a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+
+/* LAYOUT */
+.page{max-width:1100px;margin:0 auto;padding:60px 48px 80px;position:relative;z-index:1}
+
+/* HERO */
+.hero{padding-bottom:40px;border-bottom:1px solid var(--border);margin-bottom:48px}
+.hero-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.hero-label::before{content:'';width:32px;height:1px;background:var(--amber)}
+.hero h1{font-family:'Styrene B','Georgia',serif;font-size:clamp(40px,5vw,60px);font-weight:300;color:var(--cream);line-height:1.1;margin-bottom:16px}
+.hero h1 em{font-style:italic;color:var(--amber)}
+.hero-sub{color:var(--muted);max-width:620px;line-height:1.8;font-size:12px}
+
+/* DASHBOARD SECTION */
+.dash-section{margin-bottom:64px}
+.dash-header{display:flex;align-items:center;gap:16px;margin-bottom:28px}
+.dash-icon{width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:18px;border:1px solid var(--border);background:var(--s2);flex-shrink:0}
+.dash-meta{}
+.dash-name{font-family:'Poppins',sans-serif;font-size:18px;font-weight:800;letter-spacing:.02em}
+.dash-role{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.dash-line{flex:1;height:1px;background:var(--border)}
+.dash-buyer{font-size:10px;color:var(--muted);white-space:nowrap}
+.dash-buyer span{font-family:'Poppins',sans-serif;font-weight:700}
+
+/* PURPOSE BOX */
+.purpose-box{padding:18px 22px;background:var(--s1);border:1px solid var(--border);border-left:4px solid var(--dc);margin-bottom:20px;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.pb-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dc);margin-bottom:6px}
+.pb-text{font-family:'Styrene B','Georgia',serif;font-size:17px;font-style:italic;color:var(--cream);line-height:1.5}
+.pb-sub{font-size:11px;color:var(--muted);margin-top:10px;line-height:1.7}
+
+/* ELEMENT GRID */
+.element-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.el-card{background:var(--s1);border:1px solid var(--border);padding:16px 18px;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:box-shadow .2s}
+.el-card:hover{box-shadow:0 3px 10px rgba(0,0,0,0.08)}
+.el-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--ec,var(--border))}
+.el-name{font-family:'Poppins',sans-serif;font-size:12px;font-weight:700;color:var(--cream);margin-bottom:5px;display:flex;align-items:center;gap:8px}
+.el-badge{font-size:8px;padding:1px 6px;letter-spacing:.08em;font-weight:700}
+.el-desc{font-size:11px;color:var(--text);line-height:1.7;margin-bottom:8px}
+.el-how{font-size:10px;color:var(--muted);line-height:1.6;border-top:1px solid var(--border2);padding-top:8px}
+.el-how strong{color:var(--text);font-weight:600}
+
+/* METRIC TABLE */
+.metric-table{width:100%;border-collapse:collapse;margin-bottom:20px}
+.metric-table th{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 12px;border-bottom:1px solid var(--border)}
+.metric-table td{font-size:11px;color:var(--text);padding:9px 12px;border-bottom:1px solid var(--border2);vertical-align:top}
+.metric-table tr:hover td{background:var(--s2)}
+.metric-table td:first-child{color:var(--cream);font-weight:500}
+.metric-table td.score{font-family:'Poppins',sans-serif;font-weight:700}
+.mt-good{color:var(--sage)}
+.mt-warn{color:var(--amber)}
+.mt-risk{color:var(--terra)}
+
+/* SCORING SCALE */
+.scale-row{display:flex;gap:0;margin-bottom:20px;overflow:hidden;border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.scale-seg{flex:1;padding:12px;text-align:center;border-right:1px solid var(--border)}
+.scale-seg:last-child{border-right:none}
+.scale-num{font-family:'Poppins',sans-serif;font-size:16px;font-weight:800}
+.scale-label{font-size:9px;color:var(--muted);margin-top:2px;letter-spacing:.06em}
+.scale-action{font-size:8px;margin-top:4px;line-height:1.4}
+
+/* SECTION DIVIDER */
+.section-divider{display:flex;align-items:baseline;gap:16px;margin:48px 0 28px}
+.sd-title{font-family:'Styrene B','Georgia',serif;font-size:26px;font-weight:300;color:var(--cream);white-space:nowrap}
+.sd-line{flex:1;height:1px;background:var(--border)}
+
+/* GLOSSARY */
+.glossary-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.gloss-item{padding:14px 16px;background:var(--s1);border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.gi-term{font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;color:var(--amber);margin-bottom:5px}
+.gi-def{font-size:11px;color:var(--text);line-height:1.7}
+
+/* LAUNCH BUTTON */
+.launch-btn{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;
+  background:none;border:1px solid var(--border);font-family:'Poppins',sans-serif;
+  font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;transition:all .2s;cursor:pointer}
+.launch-btn:hover{border-color:var(--dc,var(--amber));color:var(--dc,var(--amber));background:var(--amber-bg)}
+.launch-btn .arrow{transition:transform .2s}
+.launch-btn:hover .arrow{transform:translateX(3px)}
+
+/* DASHBOARD LAUNCHER GRID */
+.launcher-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:28px}
+.launcher-card{padding:16px 18px;background:var(--s1);border:1px solid var(--border);
+  text-decoration:none;display:flex;align-items:center;gap:12px;
+  transition:border-color .2s,background .2s;position:relative;overflow:hidden;
+  box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.launcher-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--lc)}
+.launcher-card:hover{border-color:var(--lc);background:var(--s2)}
+.lc-icon{font-size:20px;flex-shrink:0}
+.lc-name{font-family:'Poppins',sans-serif;font-size:12px;font-weight:700;color:var(--cream);margin-bottom:2px}
+.lc-role{font-size:9px;color:var(--muted);letter-spacing:.06em}
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:28px 48px;max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;background:var(--s2)}
+.f-logo{font-family:'Styrene B','Georgia',serif;font-size:16px;color:var(--cream)}
+.f-logo em{color:var(--amber);font-style:italic}
+.f-right{font-size:9px;color:var(--muted);letter-spacing:.1em}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="tb-logo">Taste <em>Intelligence</em></div>
+  <div class="tb-nav">
+    <a href="perception-dashboard.html">Perception ↗</a>
+    <a href="validation-dashboard.html">Validation ↗</a>
+    <a href="foresight-dashboard.html">Foresight ↗</a>
+    <a href="creation-dashboard.html">Creation ↗</a>
+    <a href="settings-page.html">Settings ↗</a>
+  </div>
+  <div class="tb-tag">Reference Index · v1.0</div>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">Reference Index</div>
+    <h1>What everything<br>means on every <em>dashboard</em></h1>
+    <p class="hero-sub">A plain-English guide to every metric, panel, score, and signal across all four Taste Intelligence modules. Use this for sales demos, client onboarding, and internal team training.</p>
+
+    <!-- DASHBOARD LAUNCHERS -->
+    <div class="launcher-grid">
+      <a href="perception-dashboard.html" class="launcher-card" style="--lc:var(--amber)">
+        <div class="lc-icon">👁</div>
+        <div>
+          <div class="lc-name">Perception</div>
+          <div class="lc-role">Trend Command Center</div>
+        </div>
+        <div class="lc-arrow">→</div>
+      </a>
+      <a href="validation-dashboard.html" class="launcher-card" style="--lc:#4a7a46">
+        <div class="lc-icon">✓</div>
+        <div>
+          <div class="lc-name">Validation</div>
+          <div class="lc-role">Concept Scoring Report</div>
+        </div>
+        <div class="lc-arrow">→</div>
+      </a>
+      <a href="foresight-dashboard.html" class="launcher-card" style="--lc:var(--terra)">
+        <div class="lc-icon">◈</div>
+        <div>
+          <div class="lc-name">Foresight</div>
+          <div class="lc-role">Executive Trend Briefing</div>
+        </div>
+        <div class="lc-arrow">→</div>
+      </a>
+      <a href="creation-dashboard.html" class="launcher-card" style="--lc:var(--slate)">
+        <div class="lc-icon">⬡</div>
+        <div>
+          <div class="lc-name">Creation</div>
+          <div class="lc-role">Product Simulation</div>
+        </div>
+        <div class="lc-arrow">→</div>
+      </a>
+      <a href="settings-page.html" class="launcher-card" style="--lc:var(--muted)">
+        <div class="lc-icon">◉</div>
+        <div>
+          <div class="lc-name">Settings</div>
+          <div class="lc-role">Account & Team Management</div>
+        </div>
+        <div class="lc-arrow">→</div>
+      </a>
+      <a href="#glossary" class="launcher-card" style="--lc:var(--plum)">
+        <div class="lc-icon">§</div>
+        <div>
+          <div class="lc-name">Glossary</div>
+          <div class="lc-role">Platform Terms & Definitions</div>
+        </div>
+        <div class="lc-arrow">↓</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── PERCEPTION ──────────────────────────────────────────────────────── -->
+  <div class="dash-section" id="perception">
+    <div class="dash-header">
+      <div class="dash-icon" style="border-color:rgba(232,162,74,0.3)">👁</div>
+      <div class="dash-meta">
+        <div class="dash-name" style="color:var(--amber)">PERCEPTION</div>
+        <div class="dash-role">Trend Command Center · Real-Time Taste Signals</div>
+      </div>
+      <div class="dash-line"></div>
+      <div class="dash-buyer">Primary buyer: <span style="color:var(--amber)">Strategy / Insights</span></div>
+      <a href="perception-dashboard.html" class="launch-btn" style="--dc:var(--amber)">Open Dashboard <span class="arrow">→</span></a>
+    </div>
+
+    <div class="purpose-box" style="--dc:var(--amber)">
+      <div class="pb-label">Dashboard Purpose</div>
+      <div class="pb-text">"What is happening in food right now — and where is it happening?"</div>
+      <div class="pb-sub">Perception is the real-time intelligence layer. It tells you which ingredients are rising or falling, which flavor combinations are gaining momentum, where in the country taste is shifting, and which consumer archetypes are driving the change. It's the platform's always-on radar — the first screen you open every morning.</div>
+    </div>
+
+    <div class="element-grid">
+      <div class="el-card" style="--ec:var(--amber)">
+        <div class="el-name">Live Signals Ticker
+          <span class="el-badge" style="background:rgba(192,120,32,0.1);color:var(--amber)">Always-on</span>
+        </div>
+        <div class="el-desc">A scrolling real-time feed at the top of the screen showing all active ingredient signals — their current momentum score and month-over-month change. Modeled after a financial ticker.</div>
+        <div class="el-how"><strong>How to read it:</strong> High score + positive MoM = rising fast. Low score + negative MoM = declining. Use to quickly spot what to dig into first.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--amber)">
+        <div class="el-name">KPI Cards (top row)</div>
+        <div class="el-desc">Five headline numbers: total signals detected, count of rising ingredients, count of declining trends, emerging flavor pairs, and active geo markets. Counts animate on load.</div>
+        <div class="el-how"><strong>How to read it:</strong> Rising ingredients increasing faster than declining = healthy, expanding signal environment. Geo markets active shows national vs regional concentration.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--amber)">
+        <div class="el-name">Ingredient Trend Signals
+          <span class="el-badge" style="background:var(--amber-bg);color:var(--amber)">Core panel</span>
+        </div>
+        <div class="el-desc">The main table. Every tracked ingredient ranked by Momentum Score (1–100), with a 10-point inline sparkline showing its 30-day trajectory, and MoM % change. Filterable by Rising / All / Declining.</div>
+        <div class="el-how"><strong>How to read it:</strong> Score above 80 = high-momentum signal. The sparkline shape matters as much as the number — a flat 85 is less interesting than a sharply rising 70. MoM % shows velocity.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--amber)">
+        <div class="el-name">Flavor Pair Momentum</div>
+        <div class="el-desc">Tracks which ingredient combinations are emerging together on menus and in consumer data. Each pair shows momentum label (Very High / High / Rising / Emerging / Watch), a percentage bar, and a velocity index (how much faster than baseline it's growing).</div>
+        <div class="el-how"><strong>How to read it:</strong> Velocity index above 1.5× means it's growing meaningfully faster than the average. "Watch" pairs are pre-signal — useful for long-range product planning.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--amber)">
+        <div class="el-name">Geo Taste Heatmap</div>
+        <div class="el-desc">A US bubble map where circle size = signal intensity and color = signal strength tier (High/Med/Low). Hover any city for a tooltip showing top trending ingredients and 30-day trend in that market.</div>
+        <div class="el-how"><strong>How to read it:</strong> Large amber circles = high signal markets where trends are arriving or accelerating. Use this to prioritize pilot launch cities and regional marketing spend.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--amber)">
+        <div class="el-name">Occasion Intelligence</div>
+        <div class="el-desc">Signal strength indexed to consumption occasion — Morning Ritual, Weekend Dining, Bar & Cocktails, etc. Score shows how much taste signal is concentrated in each moment.</div>
+        <div class="el-how"><strong>How to read it:</strong> High score on Weekend Dining = opportunity for premium, experiential menu items. High score on Casual Weeknight = opportunity for accessible, repeatable formats.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--amber)">
+        <div class="el-name">Taste Archetypes (left panel)</div>
+        <div class="el-desc">The four consumer clusters segmented by flavor preference behavior: Explorer, Comfort Seeker, Conscious Eater, Prestige Diner. Each has a dominance percentage and associated flavor tags. Selecting an archetype filters the signal view to that segment.</div>
+        <div class="el-how"><strong>How to read it:</strong> Explorer is the leading edge — trends show up in Explorer data 3–6 months before they reach Comfort Seekers. Use as an early-warning filter.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--amber)">
+        <div class="el-name">Signal Alerts (right panel)</div>
+        <div class="el-desc">Automatically generated notifications when a signal crosses a threshold. Five alert types: Surge (rapid rise), Spike (sudden spike), Crossover (trend entering new channel), New (first detection), Decline (falling signal). Each includes market and segment badges.</div>
+        <div class="el-how"><strong>How to read it:</strong> Crossover alerts are the highest-value signal — they indicate a trend moving from one channel (e.g. fine dining) into another (e.g. QSR). Act on these fastest.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VALIDATION ─────────────────────────────────────────────────────── -->
+  <div class="dash-section" id="validation">
+    <div class="dash-header">
+      <div class="dash-icon" style="border-color:rgba(122,155,118,0.3)">✓</div>
+      <div class="dash-meta">
+        <div class="dash-name" style="color:var(--sage)">VALIDATION</div>
+        <div class="dash-role">Concept Scoring Report · Concept & Menu Testing</div>
+      </div>
+      <div class="dash-line"></div>
+      <div class="dash-buyer">Primary buyer: <span style="color:var(--sage)">Product / Ops</span></div>
+      <a href="validation-dashboard.html" class="launch-btn" style="--dc:var(--sage)">Open Dashboard <span class="arrow">→</span></a>
+    </div>
+
+    <div class="purpose-box" style="--dc:var(--sage)">
+      <div class="pb-label">Dashboard Purpose</div>
+      <div class="pb-text">"Will this concept work — and with whom, and where?"</div>
+      <div class="pb-sub">Validation is the decision-support layer. Before spending money on a pilot, prototype, or launch, you run the concept through Validation. It scores the concept on two independent dimensions, breaks down appeal by demographic and geography, compares it against category benchmarks, and surfaces risk flags. The output is a clear, defensible recommendation: proceed, modify, or kill.</div>
+    </div>
+
+    <!-- SCORING SCALE -->
+    <div style="margin-bottom:8px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)">Score Interpretation Scale</div>
+    <div class="scale-row">
+      <div class="scale-seg" style="background:rgba(176,64,48,0.06)">
+        <div class="scale-num" style="color:var(--terra)">0–59</div>
+        <div class="scale-label">Weak</div>
+        <div class="scale-action" style="color:var(--terra)">Do not proceed. Significant reformulation needed.</div>
+      </div>
+      <div class="scale-seg" style="background:rgba(58,106,127,0.06)">
+        <div class="scale-num" style="color:var(--slate)">60–69</div>
+        <div class="scale-label">Below Average</div>
+        <div class="scale-action" style="color:var(--slate)">Niche appeal only. Proceed with caution.</div>
+      </div>
+      <div class="scale-seg" style="background:rgba(192,120,32,0.06)">
+        <div class="scale-num" style="color:var(--amber)">70–79</div>
+        <div class="scale-label">Average</div>
+        <div class="scale-action" style="color:var(--amber)">Viable. Consider modifications before pilot.</div>
+      </div>
+      <div class="scale-seg" style="background:rgba(192,120,32,0.1)">
+        <div class="scale-num" style="color:var(--amber)">80–89</div>
+        <div class="scale-label">Strong</div>
+        <div class="scale-action" style="color:var(--amber)">Recommend pilot. Monitor closely.</div>
+      </div>
+      <div class="scale-seg" style="background:rgba(74,122,70,0.08)">
+        <div class="scale-num" style="color:var(--sage)">90–100</div>
+        <div class="scale-label">Exceptional</div>
+        <div class="scale-action" style="color:var(--sage)">High confidence. Fast-track to launch.</div>
+      </div>
+    </div>
+
+    <div class="element-grid">
+      <div class="el-card" style="--ec:var(--sage)">
+        <div class="el-name">Taste Fit Score
+          <span class="el-badge" style="background:rgba(74,122,70,0.1);color:var(--sage)">Core score</span>
+        </div>
+        <div class="el-desc">How well the concept's flavor profile, ingredients, and format align with the target consumer segment's actual taste preferences, as measured from Meal Ticket taste profiles and Atlas data.</div>
+        <div class="el-how"><strong>How to read it:</strong> This is about desire — does this concept match what the target consumer actually wants to eat? High Taste Fit but low Demand Fit = great product, wrong timing.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--sage)">
+        <div class="el-name">Demand Fit Score
+          <span class="el-badge" style="background:rgba(74,122,70,0.1);color:var(--sage)">Core score</span>
+        </div>
+        <div class="el-desc">Whether sufficient market demand exists for the concept in the current environment — accounting for trend trajectory, competitive saturation, and market timing.</div>
+        <div class="el-how"><strong>How to read it:</strong> This is about timing — is the market ready? High Demand Fit but low Taste Fit = strong market pull, wrong execution. Both high = launch-ready.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--sage)">
+        <div class="el-name">Composite Score</div>
+        <div class="el-desc">A weighted combination of Taste Fit and Demand Fit, calibrated against the Atlas benchmark dataset of 847K menu items. The single number a decision-maker can act on.</div>
+        <div class="el-how"><strong>How to read it:</strong> Composite of 80+ = recommend proceed to pilot. The written verdict below the score translates this into a plain-English action recommendation.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--sage)">
+        <div class="el-name">Demographic Breakdown</div>
+        <div class="el-desc">Taste Fit score segmented by age group (Gen Z, Millennials, Gen X, Boomers) and market type (Urban, Suburban). Shows where the concept has strong vs weak resonance.</div>
+        <div class="el-how"><strong>How to read it:</strong> A 92 with Gen Z and 51 with Boomers tells you this is a leading-edge concept, not a mass-market one. Use to target your pilot location and marketing.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--sage)">
+        <div class="el-name">Variant Comparison (A/B)</div>
+        <div class="el-desc">Up to 5 concept variants scored against each other using the same model. Shows which modification — ingredient swap, format change, preparation technique — produces the highest composite score.</div>
+        <div class="el-how"><strong>How to read it:</strong> The highest-scoring variant is flagged BEST. Use this to decide which version to take to a physical pilot, saving R&D cycles.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--sage)">
+        <div class="el-name">Geographic Appetite</div>
+        <div class="el-desc">Predicted demand fit score by city market. Tells you where the concept will land best — and where to avoid wasting launch budget.</div>
+        <div class="el-how"><strong>How to read it:</strong> Score above 85 = strong pilot market. Score below 70 = low demand signal — wait for market to mature or don't enter. Start pilots in green markets.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--sage)">
+        <div class="el-name">Category Benchmark</div>
+        <div class="el-desc">How the concept compares against similar items in the Atlas database — including competitor concepts, the category average, and the top-10% benchmark.</div>
+        <div class="el-how"><strong>How to read it:</strong> Scoring above category average is table stakes. Scoring near the Top 10% benchmark means you have a differentiated concept worth prioritizing resources on.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--sage)">
+        <div class="el-name">Risk Flags</div>
+        <div class="el-desc">Automatically surfaced risks: ingredient supply chain constraints, trend saturation windows, allergen conflicts, and competitive activity detected in Atlas. Three risk levels: High, Medium, Low.</div>
+        <div class="el-how"><strong>How to read it:</strong> High risk flags don't mean don't launch — they mean you need a mitigation plan. A 12-month saturation window tells you to move fast, not to stop.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FORESIGHT ──────────────────────────────────────────────────────── -->
+  <div class="dash-section" id="foresight">
+    <div class="dash-header">
+      <div class="dash-icon" style="border-color:rgba(196,96,74,0.3)">◈</div>
+      <div class="dash-meta">
+        <div class="dash-name" style="color:var(--terra)">FORESIGHT</div>
+        <div class="dash-role">Executive Trend Briefing · Predictive Intelligence</div>
+      </div>
+      <div class="dash-line"></div>
+      <div class="dash-buyer">Primary buyer: <span style="color:var(--terra)">Exec / Strategy</span></div>
+      <a href="foresight-dashboard.html" class="launch-btn" style="--dc:var(--terra)">Open Dashboard <span class="arrow">→</span></a>
+    </div>
+
+    <div class="purpose-box" style="--dc:var(--terra)">
+      <div class="pb-label">Dashboard Purpose</div>
+      <div class="pb-text">"What will happen in food over the next 6–24 months — and what should we do about it?"</div>
+      <div class="pb-sub">Foresight is the strategic intelligence layer. It's designed for C-suite and strategy team briefings — high signal, low noise, action-ready. It surfaces where macro trends are in their lifecycle, what whitespace opportunities exist before competitors see them, and provides a 12-month forward forecast with confidence scores. The key differentiator: Taste Intelligence surfaces these signals 6.2 months ahead of trade media on average.</div>
+    </div>
+
+    <div class="element-grid">
+      <div class="el-card" style="--ec:var(--terra)">
+        <div class="el-name">Lead Time Advantage</div>
+        <div class="el-desc">The average number of months by which Taste Intelligence detects and validates a trend before it appears in mainstream trade publications, social aggregators, or category reports.</div>
+        <div class="el-how"><strong>How to read it:</strong> Currently 6.2 months. This is the core commercial proposition — the window in which clients can act before competitors. Every month this grows, the platform becomes more valuable.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--terra)">
+        <div class="el-name">Forecast Accuracy</div>
+        <div class="el-desc">The rolling 12-month accuracy rate of Foresight's trend trajectory predictions, measured against what actually happened in the market. Currently 89% based on closed-loop validation.</div>
+        <div class="el-how"><strong>How to read it:</strong> This is the platform's credibility number. Use it in sales contexts. Higher accuracy = more client trust in forward forecasts = larger contract value.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--terra)">
+        <div class="el-name">Macro Trend Cards</div>
+        <div class="el-desc">The 5 highest-momentum, highest-longevity trends currently tracked by Foresight, ranked by a combined momentum × longevity score. Each card shows: phase label, momentum %, current penetration %, opportunity window, and confidence score. Includes a miniature lifecycle curve.</div>
+        <div class="el-how"><strong>How to read it:</strong> Phase labels indicate maturity — Emerging Signal = years of runway; Mainstream Entry = 12–18 months before saturation. Act fastest on "Acceleration" phase trends.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--terra)">
+        <div class="el-name">Trend Phase Labels</div>
+        <div class="el-desc">Five lifecycle stages: <strong>Emerging Signal</strong> (chef/event data only), <strong>Early Adoption</strong> (indie restaurants), <strong>Acceleration</strong> (chain adoption), <strong>Mainstream Entry</strong> (QSR/retail crossover), <strong>Saturation</strong> (mass market, declining margins).</div>
+        <div class="el-how"><strong>How to read it:</strong> The ideal entry point for a new product is Acceleration phase. Too early (Emerging) = market not ready. Too late (Mainstream Entry) = you're playing catch-up.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--terra)">
+        <div class="el-name">12-Month Forward Forecast</div>
+        <div class="el-desc">A multi-line chart projecting the indexed momentum score of the top 5 ingredients over the next 12 months. The shaded area (when visible) represents the confidence interval. A "Now" line divides historical from projected data.</div>
+        <div class="el-how"><strong>How to read it:</strong> Lines crossing = two trends converging or diverging in significance. A steep upward trajectory that hasn't peaked = significant opportunity. Flatten or decline = past peak.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--terra)">
+        <div class="el-name">Whitespace Opportunities</div>
+        <div class="el-desc">Identified gaps where consumer taste demand is building but no scaled product or concept yet exists to meet it. Each opportunity shows: estimated market size, entry window (time before competition enters), supporting signals, and a confidence score.</div>
+        <div class="el-how"><strong>How to read it:</strong> Short window (12 months) + high confidence = immediate action required. Long window (24+ months) + lower confidence = put on watchlist, monitor quarterly.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--terra)">
+        <div class="el-name">12-Month Horizon (sidebar)</div>
+        <div class="el-desc">A chronological list of predicted market events — trend breaks, saturation points, crossover moments — ranked by timing and confidence score. Arrows indicate direction: ↑ accelerating, ↓ declining, → stabilizing.</div>
+        <div class="el-how"><strong>How to read it:</strong> This is the editorial calendar for product and campaign planning. Map launches and marketing moments against these predicted events.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--terra)">
+        <div class="el-name">Watchlist</div>
+        <div class="el-desc">User-curated list of ingredients and trends being monitored for emergence. Each item has a status tag: ACT (move now), WATCH (3–6 months), or MONITOR (longer horizon, periodic check-in).</div>
+        <div class="el-how"><strong>How to read it:</strong> ACT items should be in active product briefs. WATCH items should be in quarterly planning reviews. MONITOR items feed the long-range innovation pipeline.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CREATION ───────────────────────────────────────────────────────── -->
+  <div class="dash-section" id="creation">
+    <div class="dash-header">
+      <div class="dash-icon" style="border-color:rgba(106,138,159,0.3)">⬡</div>
+      <div class="dash-meta">
+        <div class="dash-name" style="color:var(--slate)">CREATION</div>
+        <div class="dash-role">Product Simulation · R&D Concept Generation</div>
+      </div>
+      <div class="dash-line"></div>
+      <div class="dash-buyer">Primary buyer: <span style="color:var(--slate)">R&D / Innovation</span></div>
+      <a href="creation-dashboard.html" class="launch-btn" style="--dc:var(--slate)">Open Dashboard <span class="arrow">→</span></a>
+    </div>
+
+    <div class="purpose-box" style="--dc:var(--slate)">
+      <div class="pb-label">Dashboard Purpose</div>
+      <div class="pb-text">"What should we build next — and what will it do commercially before we spend a dollar on development?"</div>
+      <div class="pb-sub">Creation is the product development simulation layer. R&D and innovation teams use it to generate new product or dish concepts from taste signals, simulate their commercial performance before any physical prototype is made, model adoption curves under different market scenarios, and position new concepts against the existing portfolio. It closes the loop back to Validation — every generated concept can be sent directly to Validation for full scoring.</div>
+    </div>
+
+    <div class="element-grid">
+      <div class="el-card" style="--ec:var(--slate)">
+        <div class="el-name">Generation Parameters (left panel)</div>
+        <div class="el-desc">The input layer for concept generation. Set: target segment, product category, consumption occasion, price point, lead ingredients (Perception signals), must-avoid ingredients, must-include ingredients, and complexity level.</div>
+        <div class="el-how"><strong>How to read it:</strong> More specific parameters = more focused concepts. Use "Lead with Signals" to anchor generation to trending ingredients detected in Perception. Import directly from Foresight to generate concepts from whitespace opportunities.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--slate)">
+        <div class="el-name">Generated Concept Cards</div>
+        <div class="el-desc">The output of a generation run — up to 5 AI-generated food or product concepts, ranked by predicted composite score. Each card shows: concept name, description, flavor/format tags, and revenue proxy estimate.</div>
+        <div class="el-how"><strong>How to read it:</strong> Cards are ranked best-first. Select any card to load its full simulation data in the panels below. The revenue proxy is a directional estimate, not a guarantee — validate with the Validation module.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--slate)">
+        <div class="el-name">Adoption Curve Simulation</div>
+        <div class="el-desc">A 24-month projected market adoption curve for the selected concept under three scenarios: Bull (best case), Base (most likely), and Bear (worst case). Y-axis is penetration index (0–100). Toggle between scenarios to see the range of outcomes.</div>
+        <div class="el-how"><strong>How to read it:</strong> The shape of the curve matters as much as the endpoint. A steep early ramp (J-curve) = viral potential. A slow linear rise = steady but predictable. Compare Bull vs Bear gap to assess risk range.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--slate)">
+        <div class="el-name">Revenue Proxy Model</div>
+        <div class="el-desc">First-year revenue estimates under four scenarios: Optimistic, Base Case, Conservative, and 3-Year TAM. Based on comparable Atlas menu items, segment size, predicted penetration, and average check or price point.</div>
+        <div class="el-how"><strong>How to read it:</strong> Use the Base Case for budget planning and the range (Conservative → Optimistic) for risk assessment. The 3-Year TAM shows the full category ceiling if the concept achieves national scale.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--slate)">
+        <div class="el-name">Segment Fit Scores</div>
+        <div class="el-desc">Predicted appeal score for the selected concept across 7 consumer segments: the four taste archetypes plus Urban, Gen Z, and Family. Shows where the concept has natural pull vs where it will need marketing support.</div>
+        <div class="el-how"><strong>How to read it:</strong> Identify your primary segment (highest score) and secondary segment (second highest). Your launch strategy, marketing voice, and distribution channel should be built around those two segments.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--slate)">
+        <div class="el-name">Portfolio Positioning Map</div>
+        <div class="el-desc">A 2×2 bubble chart mapping new concepts (amber) against existing portfolio items (grey) on two axes: Price/Premium (Y) and Novelty/Familiarity (X). Bubble size represents revenue proxy. Reveals whitespace gaps in the current lineup.</div>
+        <div class="el-how"><strong>How to read it:</strong> Empty quadrants in your portfolio map = opportunity. New concepts that cluster on top of existing items = cannibalization risk. Look for amber bubbles in unoccupied spaces.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--slate)">
+        <div class="el-name">AI Insights (right panel)</div>
+        <div class="el-desc">Three automatically generated insights for the active concept: one Opportunity (whitespace or timing advantage), one Risk Flag (saturation, competition, supply), and one Timing Signal (urgency of the entry window).</div>
+        <div class="el-how"><strong>How to read it:</strong> Read these before any decision. The Risk Flag is particularly important — it's the thing most likely to make or break the concept's commercial performance.</div>
+      </div>
+      <div class="el-card" style="--ec:var(--slate)">
+        <div class="el-name">Iteration Engine</div>
+        <div class="el-desc">A list of AI-suggested modifications to the active concept — ingredient swaps, technique changes, component additions — each with a predicted score delta if applied. Hit "Apply" to incorporate the change and recalculate.</div>
+        <div class="el-how"><strong>How to read it:</strong> Focus on changes with the highest positive delta. Running 2–3 iterations before sending to Validation typically adds 4–8 composite score points — the equivalent of skipping an entire R&D cycle.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── GLOSSARY ────────────────────────────────────────────────────────── -->
+  <div class="section-divider" id="glossary">
+    <div class="sd-title">Platform Glossary</div>
+    <div class="sd-line"></div>
+  </div>
+  <p style="color:var(--muted);font-size:11px;line-height:1.7;margin-bottom:20px;max-width:700px">Terms used across all four modules. Reference these when explaining the platform to prospects, clients, or new team members.</p>
+
+  <div class="glossary-grid">
+    <div class="gloss-item">
+      <div class="gi-term">Atlas</div>
+      <div class="gi-def">The platform's canonical knowledge graph — connecting 847K+ menu items, 1M+ SKUs, ingredients, flavor compounds, and restaurant archetypes. Every module reads from Atlas; Crave and Capture write back into it.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gi-term">Capture</div>
+      <div class="gi-def">The event and operator data acquisition layer. Collects proprietary taste signals from 100–300 food festivals and chef showcases annually, plus POS integrations and chef plate profile submissions. Feeds Atlas.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gi-term">Meal Ticket</div>
+      <div class="gi-def">The consumer data layer. A B2C app where users build a Foodie Profile via taste quiz, receive personalized restaurant and dish recommendations, and generate continuous behavioral signals that feed Atlas and Pulse models.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gi-term">Crave</div>
+      <div class="gi-def">The commercial Validation product AND an operator data pipeline. Every menu submission, concept score, and A/B test result generated through Crave enriches the Atlas knowledge graph with real-world operator behavior.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gi-term">Momentum Score</div>
+      <div class="gi-def">A 0–100 index measuring the current velocity of an ingredient or flavor trend. Combines menu penetration rate, year-over-year growth, Meal Ticket consumer demand signals, and event detection frequency.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gi-term">Taste Fit Score</div>
+      <div class="gi-def">How well a food concept aligns with the target consumer segment's measured taste preferences. Derived from Meal Ticket taste profiles matched against the concept's ingredient and flavor profile in Atlas.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gi-term">Demand Fit Score</div>
+      <div class="gi-def">Whether sufficient market demand exists for a concept right now. Accounts for trend phase, competitive saturation, regional appetite, and timing relative to the adoption curve.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gi-term">Composite Score</div>
+      <div class="gi-def">A weighted combination of Taste Fit and Demand Fit scores, normalized against the full Atlas benchmark dataset. The single decision-support number for go/no-go concept decisions.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gi-term">Recipe Genome</div>
+      <div class="gi-def">A normalized archetype representing a dish category in Atlas. Each Genome encodes the flavor profile, technique, cuisine origin, and ingredient relationships — enabling cross-concept comparison and matching.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gi-term">Flavor Pair Momentum</div>
+      <div class="gi-def">The velocity at which two ingredients are appearing together on menus and in consumer data. Expressed as a velocity index (e.g. +1.9×) showing how much faster the pairing is growing vs baseline.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gi-term">Whitespace Opportunity</div>
+      <div class="gi-def">A gap where consumer taste demand is measurably building but no scaled product or concept yet exists to meet it. Foresight surfaces these with estimated market size and entry window before competition arrives.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gi-term">Trend Phase</div>
+      <div class="gi-def">Five lifecycle stages: Emerging Signal → Early Adoption → Acceleration → Mainstream Entry → Saturation. Determines both the urgency of action and the type of product strategy appropriate at each stage.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gi-term">Lead Time Advantage</div>
+      <div class="gi-def">The average number of months by which Taste Intelligence detects and validates a trend before it appears in mainstream trade publications. Currently 6.2 months — the core commercial value of the platform.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gi-term">Revenue Proxy</div>
+      <div class="gi-def">A directional revenue estimate generated by the Creation module for a new concept. Based on comparable Atlas items, target segment size, predicted adoption curve, and average price point. Not a financial projection — a planning signal.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gi-term">Taste Archetype</div>
+      <div class="gi-def">One of four consumer behavioral clusters: Explorer (novelty-seeking, global flavors), Comfort Seeker (familiar, indulgent), Conscious Eater (functional, plant-based), Prestige Diner (premium, origin-led). Explorer is the leading-edge signal group.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gi-term">Iteration Engine</div>
+      <div class="gi-def">A Creation module feature that suggests specific modifications to a concept (ingredient swaps, technique changes) with predicted score deltas. Enables rapid digital iteration before physical R&D begins.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="f-logo">Taste <em>Intelligence</em></div>
+  <div class="f-right">Dashboard Reference Index · v1.0 · 2025 · Powered by Taste Intelligence</div>
+</footer>
+
+</body>
+</html>
