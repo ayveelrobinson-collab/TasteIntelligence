@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perception — Trend Command Center · Taste Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── STYRENE B font-face: add your licensed .woff2 files or link via Adobe Fonts.
+   Falls back to Georgia until loaded. Example:
+   @font-face { font-family: "Styrene B"; src: url("fonts/StyreneB-Regular.woff2") format("woff2"); font-weight:400; }
+   @font-face { font-family: "Styrene B"; src: url("fonts/StyreneB-Medium.woff2")  format("woff2"); font-weight:500; }
+*/
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #0c0b09;
+  --s1:       #131109;
+  --s2:       #1a1812;
+  --s3:       #22201a;
+  --border:   rgba(255,255,255,0.07);
+  --border2:  rgba(255,255,255,0.04);
+  --amber:    #e8a24a;
+  --amber2:   #f0b86a;
+  --amber-bg: rgba(232,162,74,0.08);
+  --amber-glow: rgba(232,162,74,0.15);
+  --terra:    #c4604a;
+  --terra-bg: rgba(196,96,74,0.1);
+  --sage:     #7a9b76;
+  --sage-bg:  rgba(122,155,118,0.1);
+  --slate:    #6a8a9f;
+  --slate-bg: rgba(106,138,159,0.1);
+  --plum:     #9b6eb5;
+  --cream:    #f0e8d8;
+  --muted:    #6b6459;
+  --muted2:   #4a4440;
+  --text:     #c8bfb0;
+  --up:       #7a9b76;
+  --down:     #c4604a;
+  --neutral:  #6a8a9f;
+}
+
+html, body { height: 100%; overflow: hidden; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── GRAIN ── */
+body::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  display: flex; align-items: center; gap: 0;
+  height: 48px; flex-shrink: 0;
+  background: var(--s1);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+  position: relative; z-index: 100;
+}
+.tb-logo {
+  font-family: 'Styrene B', 'Georgia', serif;
+  font-size: 16px; font-weight: 300; color: var(--cream);
+  letter-spacing: .04em; white-space: nowrap; margin-right: 32px;
+}
+.tb-logo em { color: var(--amber); font-style: italic; }
+.tb-modules { display: flex; gap: 0; margin-right: auto; }
+.tb-mod {
+  padding: 0 18px; height: 48px; display: flex; align-items: center;
+  font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent;
+  transition: color .2s; white-space: nowrap;
+}
+.tb-mod:hover { color: var(--text); }
+.tb-mod.active { color: var(--amber); border-bottom-color: var(--amber); }
+.tb-right { display: flex; align-items: center; gap: 16px; }
+.tb-market {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 12px; background: var(--s2); border: 1px solid var(--border);
+  font-size: 10px; letter-spacing: .1em; color: var(--text); cursor: pointer;
+}
+.tb-market select {
+  background: none; border: none; color: var(--text);
+  font-family: 'Inter', sans-serif; font-size: 10px;
+  letter-spacing: .1em; cursor: pointer; outline: none;
+}
+.tb-market select option { background: #1a1812; }
+.live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--sage); animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.7)} }
+.tb-time { font-size: 10px; color: var(--muted); letter-spacing: .08em; }
+.tb-alert-btn {
+  position: relative; padding: 6px; background: var(--s2);
+  border: 1px solid var(--border); cursor: pointer; color: var(--muted);
+  font-size: 14px; line-height: 1; transition: color .2s;
+}
+.tb-alert-btn:hover { color: var(--amber); }
+.alert-badge {
+  position: absolute; top: -3px; right: -3px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--terra); color: #fff;
+  font-size: 8px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Poppins', sans-serif; font-weight: 700;
+}
+
+/* ── TICKER ── */
+.ticker {
+  height: 30px; flex-shrink: 0;
+  background: var(--s2); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; overflow: hidden;
+  position: relative;
+}
+.ticker-label {
+  flex-shrink: 0; padding: 0 14px; background: var(--amber);
+  height: 100%; display: flex; align-items: center;
+  font-family: 'Poppins', sans-serif; font-size: 9px; font-weight: 700;
+  color: var(--bg); letter-spacing: .14em; white-space: nowrap;
+}
+.ticker-track {
+  display: flex; gap: 0; white-space: nowrap;
+  animation: ticker-scroll 55s linear infinite;
+}
+@keyframes ticker-scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.tick-item {
+  padding: 0 24px; display: flex; align-items: center; gap: 8px;
+  font-size: 10px; letter-spacing: .06em;
+  border-right: 1px solid var(--border2);
+}
+.tick-name { color: var(--cream); font-weight: 500; }
+.tick-val { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 10px; }
+.tick-up { color: var(--up); }
+.tick-down { color: var(--down); }
+.tick-chg { color: var(--muted); font-size: 9px; }
+
+/* ── MAIN LAYOUT ── */
+.main {
+  display: grid;
+  grid-template-columns: 220px 1fr 260px;
+  grid-template-rows: 1fr;
+  flex: 1; min-height: 0; overflow: hidden;
+}
+
+/* ── LEFT PANEL ── */
+.left-panel {
+  background: var(--s1); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden;
+}
+.left-panel::-webkit-scrollbar { width: 3px; }
+.left-panel::-webkit-scrollbar-thumb { background: var(--muted2); }
+.lp-section { padding: 16px; border-bottom: 1px solid var(--border2); }
+.lp-head {
+  font-size: 9px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 10px; display: flex;
+  align-items: center; justify-content: space-between;
+}
+.lp-head span { color: var(--amber); font-size: 9px; cursor: pointer; }
+.filter-pill {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 10px; background: var(--s2); border: 1px solid var(--border);
+  margin-bottom: 4px; cursor: pointer; transition: border-color .2s, background .2s;
+  font-size: 10px; color: var(--text);
+}
+.filter-pill:hover { border-color: var(--amber); background: var(--amber-bg); }
+.filter-pill.active { border-color: var(--amber); background: var(--amber-bg); color: var(--amber); }
+.filter-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.filter-count { margin-left: auto; color: var(--muted); font-size: 9px; }
+
+.archetype-card {
+  padding: 10px; margin-bottom: 4px;
+  background: var(--s2); border: 1px solid var(--border);
+  cursor: pointer; transition: border-color .2s;
+  position: relative; overflow: hidden;
+}
+.archetype-card:hover { border-color: rgba(255,255,255,.12); }
+.archetype-card.selected { border-color: var(--amber); }
+.arch-name { font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 700; color: var(--cream); margin-bottom: 2px; }
+.arch-pct { font-size: 10px; color: var(--amber); font-weight: 500; margin-bottom: 6px; }
+.arch-bar-bg { height: 3px; background: var(--s3); border-radius: 2px; }
+.arch-bar { height: 3px; border-radius: 2px; background: var(--amber); }
+.arch-tags { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 6px; }
+.arch-tag {
+  font-size: 8px; padding: 1px 5px;
+  background: var(--s3); color: var(--muted);
+  letter-spacing: .06em;
+}
+
+/* ── CENTER ── */
+.center { display: flex; flex-direction: column; overflow: hidden; }
+
+/* ── KPI ROW ── */
+.kpi-row {
+  display: grid; grid-template-columns: repeat(5,1fr);
+  border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+.kpi-card {
+  padding: 14px 16px; border-right: 1px solid var(--border);
+  position: relative; overflow: hidden; cursor: default;
+  transition: background .2s;
+}
+.kpi-card:last-child { border-right: none; }
+.kpi-card:hover { background: var(--s2); }
+.kpi-label { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.kpi-val { font-family: 'Poppins', sans-serif; font-size: 22px; font-weight: 800; color: var(--cream); line-height: 1; margin-bottom: 4px; }
+.kpi-val.up { color: var(--up); }
+.kpi-val.down { color: var(--down); }
+.kpi-delta { font-size: 9px; display: flex; align-items: center; gap: 4px; }
+.kpi-delta.up { color: var(--up); }
+.kpi-delta.down { color: var(--down); }
+.kpi-delta.neu { color: var(--muted); }
+.kpi-spark { position: absolute; bottom: 0; right: 0; opacity: .25; }
+
+/* ── CHART AREA ── */
+.chart-area {
+  flex: 1; display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  min-height: 0; gap: 0;
+}
+.chart-panel {
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 16px; display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.chart-panel:nth-child(2) { border-right: none; }
+.chart-panel:nth-child(3) { border-bottom: none; }
+.chart-panel:nth-child(4) { border-right: none; border-bottom: none; }
+.cp-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px; flex-shrink: 0;
+}
+.cp-title { font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 700; color: var(--cream); }
+.cp-sub { font-size: 9px; color: var(--muted); margin-top: 1px; }
+.cp-controls { display: flex; gap: 4px; }
+.cp-ctrl {
+  padding: 3px 8px; font-size: 8px; letter-spacing: .1em;
+  text-transform: uppercase; background: var(--s2);
+  border: 1px solid var(--border); color: var(--muted); cursor: pointer;
+  transition: all .15s;
+}
+.cp-ctrl:hover, .cp-ctrl.active { color: var(--amber); border-color: var(--amber); background: var(--amber-bg); }
+
+/* ── TREND TABLE ── */
+.trend-table { width: 100%; flex: 1; overflow-y: auto; }
+.trend-table::-webkit-scrollbar { width: 2px; }
+.trend-table::-webkit-scrollbar-thumb { background: var(--muted2); }
+.tt-row {
+  display: grid; grid-template-columns: 1fr 60px 70px 80px 50px;
+  align-items: center; padding: 7px 0;
+  border-bottom: 1px solid var(--border2);
+  cursor: pointer; transition: background .15s;
+}
+.tt-row:hover { background: var(--amber-bg); margin: 0 -16px; padding: 7px 16px; }
+.tt-row:last-child { border-bottom: none; }
+.tt-rank { font-size: 9px; color: var(--muted2); width: 16px; }
+.tt-name { font-size: 11px; color: var(--cream); font-weight: 500; }
+.tt-cat { font-size: 9px; color: var(--muted); margin-top: 1px; }
+.tt-score { font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 700; text-align: right; }
+.tt-spark svg { display: block; }
+.tt-chg { font-size: 10px; font-weight: 700; font-family: 'Poppins', sans-serif; text-align: right; }
+.tt-vel { font-size: 9px; color: var(--muted); text-align: right; }
+
+/* ── MINI SPARKLINE (SVG inline) ── */
+.spark { display: block; }
+
+/* ── FLAVOR PAIRS ── */
+.pairs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; flex: 1; overflow-y: auto; }
+.pair-card {
+  background: var(--s2); border: 1px solid var(--border);
+  padding: 10px; cursor: pointer; transition: border-color .2s;
+  position: relative;
+}
+.pair-card:hover { border-color: rgba(255,255,255,.14); }
+.pair-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--pc); opacity: .7;
+}
+.pair-names {
+  font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 700;
+  color: var(--cream); margin-bottom: 4px;
+}
+.pair-join { color: var(--muted); font-weight: 400; margin: 0 4px; }
+.pair-momentum { font-size: 10px; margin-bottom: 6px; }
+.pair-bar-bg { height: 2px; background: var(--s3); border-radius: 1px; }
+.pair-bar { height: 2px; border-radius: 1px; background: var(--pc); }
+.pair-meta { display: flex; justify-content: space-between; margin-top: 5px; }
+.pair-context { font-size: 9px; color: var(--muted); }
+.pair-index { font-size: 9px; font-family: 'Poppins', sans-serif; font-weight: 700; }
+
+/* ── US MAP ── */
+.map-wrap { flex: 1; position: relative; overflow: hidden; }
+.map-svg { width: 100%; height: 100%; }
+.map-bubble { cursor: pointer; transition: opacity .2s; }
+.map-bubble:hover { opacity: .85; }
+.map-bubble circle { transition: r .3s; }
+.map-label { font-family: 'Inter', sans-serif; font-size: 8px; fill: var(--cream); pointer-events: none; }
+.map-legend { position: absolute; bottom: 8px; left: 10px; display: flex; gap: 12px; }
+.ml-item { display: flex; align-items: center; gap: 4px; font-size: 8px; color: var(--muted); }
+.ml-dot { width: 6px; height: 6px; border-radius: 50%; }
+.map-tooltip {
+  position: absolute; background: var(--s2); border: 1px solid var(--amber);
+  padding: 8px 12px; pointer-events: none; opacity: 0; transition: opacity .15s;
+  font-size: 10px; min-width: 130px; z-index: 10;
+}
+.map-tooltip.visible { opacity: 1; }
+.mtt-city { font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--cream); margin-bottom: 4px; font-size: 11px; }
+.mtt-item { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); margin-bottom: 2px; }
+.mtt-val { color: var(--amber); font-weight: 600; }
+
+/* ── OCCASIONS ── */
+.occasions-list { flex: 1; display: flex; flex-direction: column; gap: 5px; overflow-y: auto; }
+.occ-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 10px; background: var(--s2); border: 1px solid var(--border);
+  cursor: pointer; transition: border-color .2s, background .2s;
+}
+.occ-row:hover { border-color: rgba(255,255,255,.12); background: var(--s3); }
+.occ-icon { font-size: 16px; flex-shrink: 0; }
+.occ-name { font-size: 11px; color: var(--cream); font-weight: 500; flex: 1; }
+.occ-sub { font-size: 9px; color: var(--muted); }
+.occ-bar-wrap { width: 70px; }
+.occ-bar-bg { height: 4px; background: var(--s3); border-radius: 2px; }
+.occ-bar-fill { height: 4px; border-radius: 2px; }
+.occ-pct { font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 700; width: 34px; text-align: right; color: var(--amber); }
+
+/* ── RIGHT PANEL ── */
+.right-panel {
+  background: var(--s1); border-left: 1px solid var(--border);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.rp-section {
+  border-bottom: 1px solid var(--border);
+  padding: 14px 16px;
+  flex-shrink: 0;
+}
+.rp-head {
+  font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 10px; display: flex;
+  align-items: center; justify-content: space-between;
+}
+.rp-head .cnt {
+  background: var(--terra); color: #fff; font-size: 8px;
+  font-family: 'Poppins', sans-serif; font-weight: 700;
+  padding: 1px 5px; border-radius: 2px;
+}
+
+/* ── ALERTS ── */
+.alert-feed { overflow-y: auto; flex: 1; padding: 0 16px 16px; }
+.alert-feed::-webkit-scrollbar { width: 2px; }
+.alert-feed::-webkit-scrollbar-thumb { background: var(--muted2); }
+.alert-item {
+  padding: 10px 0; border-bottom: 1px solid var(--border2);
+  cursor: pointer; transition: opacity .2s;
+}
+.alert-item:hover { opacity: .8; }
+.alert-item:last-child { border-bottom: none; }
+.alert-top { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 5px; }
+.alert-icon {
+  width: 20px; height: 20px; border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; flex-shrink: 0; margin-top: 1px;
+}
+.alert-icon.surge   { background: var(--sage-bg); color: var(--sage); }
+.alert-icon.spike   { background: var(--terra-bg); color: var(--terra); }
+.alert-icon.cross   { background: var(--amber-bg); color: var(--amber); }
+.alert-icon.decline { background: rgba(106,138,159,.1); color: var(--slate); }
+.alert-icon.new     { background: rgba(155,110,181,.1); color: var(--plum); }
+.alert-title { font-size: 11px; color: var(--cream); line-height: 1.4; }
+.alert-meta { font-size: 9px; color: var(--muted); }
+.alert-badge-row { display: flex; gap: 4px; flex-wrap: wrap; }
+.alert-badge {
+  font-size: 8px; padding: 2px 6px; letter-spacing: .06em;
+  border: 1px solid var(--border);
+}
+.alert-badge.market  { color: var(--slate); border-color: var(--slate-bg); background: var(--slate-bg); }
+.alert-badge.segment { color: var(--sage); border-color: var(--sage-bg); background: var(--sage-bg); }
+.alert-badge.new-tag { color: var(--plum); border-color: rgba(155,110,181,.2); background: rgba(155,110,181,.08); }
+
+/* ── CONFIDENCE WIDGET ── */
+.conf-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.conf-label { font-size: 10px; color: var(--text); flex: 1; }
+.conf-bar-bg { width: 80px; height: 4px; background: var(--s3); border-radius: 2px; flex-shrink: 0; }
+.conf-bar-fill { height: 4px; border-radius: 2px; }
+.conf-pct { width: 28px; text-align: right; font-size: 10px; font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--amber); }
+
+/* ── BOTTOM STATUS ── */
+.status-bar {
+  height: 26px; flex-shrink: 0;
+  background: var(--s1); border-top: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 16px; gap: 16px;
+}
+.sb-item { font-size: 9px; color: var(--muted); letter-spacing: .08em; display: flex; align-items: center; gap: 5px; }
+.sb-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--sage); }
+.sb-sep { width: 1px; height: 12px; background: var(--border); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+.chart-panel { animation: fadeIn .4s ease both; }
+.chart-panel:nth-child(1){animation-delay:.05s}
+.chart-panel:nth-child(2){animation-delay:.1s}
+.chart-panel:nth-child(3){animation-delay:.15s}
+.chart-panel:nth-child(4){animation-delay:.2s}
+
+/* ── SELECTED HIGHLIGHT ── */
+.tt-row.selected { background: var(--amber-bg); }
+.tt-row.selected .tt-name { color: var(--amber); }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="tb-logo">Taste <em>Intelligence</em></div>
+  <nav class="tb-modules">
+    <div class="tb-mod active">Perception</div>
+    <div class="tb-mod">Validation</div>
+    <div class="tb-mod">Foresight</div>
+    <div class="tb-mod">Creation</div>
+  </nav>
+  <div class="tb-right">
+    <div class="live-dot"></div>
+    <div class="tb-time" id="livetime">Live · Updated just now</div>
+    <div class="tb-market">
+      <span style="color:var(--muted);font-size:9px;letter-spacing:.1em">MARKET</span>
+      <select id="marketSel">
+        <option>United States</option>
+        <option>Northeast</option>
+        <option>Southeast</option>
+        <option>Midwest</option>
+        <option>Southwest</option>
+        <option>West Coast</option>
+        <option>Texas</option>
+      </select>
+    </div>
+    <div class="tb-market">
+      <span style="color:var(--muted);font-size:9px;letter-spacing:.1em">PERIOD</span>
+      <select id="periodSel">
+        <option>Last 30 days</option>
+        <option>Last 90 days</option>
+        <option>Last 6 months</option>
+        <option>Last 12 months</option>
+        <option>YTD</option>
+      </select>
+    </div>
+    <div class="tb-alert-btn" onclick="toggleAlerts()">
+      🔔<span class="alert-badge">7</span>
+    </div>
+  </div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-label">LIVE SIGNALS</div>
+  <div style="overflow:hidden;flex:1;position:relative;">
+    <div class="ticker-track" id="tickerTrack">
+      <!-- populated by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- LEFT: FILTERS + ARCHETYPES -->
+  <aside class="left-panel">
+
+    <div class="lp-section">
+      <div class="lp-head">Categories <span>All</span></div>
+      <div class="filter-pill active" onclick="toggleFilter(this)">
+        <div class="filter-dot" style="background:var(--amber)"></div>
+        All Categories
+        <span class="filter-count">847</span>
+      </div>
+      <div class="filter-pill" onclick="toggleFilter(this)">
+        <div class="filter-dot" style="background:var(--terra)"></div>
+        Proteins
+        <span class="filter-count">124</span>
+      </div>
+      <div class="filter-pill" onclick="toggleFilter(this)">
+        <div class="filter-dot" style="background:var(--sage)"></div>
+        Vegetables
+        <span class="filter-count">203</span>
+      </div>
+      <div class="filter-pill" onclick="toggleFilter(this)">
+        <div class="filter-dot" style="background:var(--slate)"></div>
+        Spices & Heat
+        <span class="filter-count">89</span>
+      </div>
+      <div class="filter-pill" onclick="toggleFilter(this)">
+        <div class="filter-dot" style="background:var(--plum)"></div>
+        Fermented
+        <span class="filter-count">67</span>
+      </div>
+      <div class="filter-pill" onclick="toggleFilter(this)">
+        <div class="filter-dot" style="background:#c4a26a"></div>
+        Dairy & Alt Dairy
+        <span class="filter-count">91</span>
+      </div>
+      <div class="filter-pill" onclick="toggleFilter(this)">
+        <div class="filter-dot" style="background:#8a7a9b"></div>
+        Grains & Ancient
+        <span class="filter-count">78</span>
+      </div>
+    </div>
+
+    <div class="lp-section">
+      <div class="lp-head">Channels <span>Edit</span></div>
+      <div class="filter-pill active" onclick="toggleFilter(this)">
+        <div class="filter-dot" style="background:var(--amber)"></div>
+        All Channels
+      </div>
+      <div class="filter-pill" onclick="toggleFilter(this)">
+        <div class="filter-dot" style="background:var(--sage)"></div>
+        Restaurants
+      </div>
+      <div class="filter-pill" onclick="toggleFilter(this)">
+        <div class="filter-dot" style="background:var(--slate)"></div>
+        Retail / CPG
+      </div>
+      <div class="filter-pill" onclick="toggleFilter(this)">
+        <div class="filter-dot" style="background:var(--plum)"></div>
+        Event / Chef
+      </div>
+    </div>
+
+    <div class="lp-section" style="flex:1;border-bottom:none;">
+      <div class="lp-head">Taste Archetypes</div>
+      <div class="archetype-card selected" onclick="selectArch(this)">
+        <div class="arch-name">The Explorer</div>
+        <div class="arch-pct">28% of consumers</div>
+        <div class="arch-bar-bg"><div class="arch-bar" style="width:68%"></div></div>
+        <div class="arch-tags">
+          <span class="arch-tag">Global flavors</span>
+          <span class="arch-tag">Fermented</span>
+          <span class="arch-tag">Heat</span>
+        </div>
+      </div>
+      <div class="archetype-card" onclick="selectArch(this)">
+        <div class="arch-name">The Comfort Seeker</div>
+        <div class="arch-pct">34% of consumers</div>
+        <div class="arch-bar-bg"><div class="arch-bar" style="width:84%"></div></div>
+        <div class="arch-tags">
+          <span class="arch-tag">Familiar</span>
+          <span class="arch-tag">Indulgent</span>
+          <span class="arch-tag">Nostalgic</span>
+        </div>
+      </div>
+      <div class="archetype-card" onclick="selectArch(this)">
+        <div class="arch-name">The Conscious Eater</div>
+        <div class="arch-pct">22% of consumers</div>
+        <div class="arch-bar-bg"><div class="arch-bar" style="width:54%"></div></div>
+        <div class="arch-tags">
+          <span class="arch-tag">Plant-based</span>
+          <span class="arch-tag">Functional</span>
+          <span class="arch-tag">Clean label</span>
+        </div>
+      </div>
+      <div class="archetype-card" onclick="selectArch(this)">
+        <div class="arch-name">The Prestige Diner</div>
+        <div class="arch-pct">16% of consumers</div>
+        <div class="arch-bar-bg"><div class="arch-bar" style="width:40%"></div></div>
+        <div class="arch-tags">
+          <span class="arch-tag">Premium</span>
+          <span class="arch-tag">Artisan</span>
+          <span class="arch-tag">Origin-led</span>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- CENTER -->
+  <main class="center">
+
+    <!-- KPI ROW -->
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-label">Signals Detected</div>
+        <div class="kpi-val" id="kpi1">1,847</div>
+        <div class="kpi-delta up">↑ 12% vs last period</div>
+        <svg class="kpi-spark" width="60" height="28" viewBox="0 0 60 28">
+          <polyline fill="none" stroke="#7a9b76" stroke-width="1.5" points="0,20 10,18 20,14 30,16 40,10 50,8 60,5"/>
+        </svg>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Rising Ingredients</div>
+        <div class="kpi-val up" id="kpi2">243</div>
+        <div class="kpi-delta up">↑ 34 new this week</div>
+        <svg class="kpi-spark" width="60" height="28" viewBox="0 0 60 28">
+          <polyline fill="none" stroke="#7a9b76" stroke-width="1.5" points="0,22 10,20 20,16 30,14 40,11 50,7 60,4"/>
+        </svg>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Declining Trends</div>
+        <div class="kpi-val down" id="kpi3">67</div>
+        <div class="kpi-delta down">↓ 8 new this week</div>
+        <svg class="kpi-spark" width="60" height="28" viewBox="0 0 60 28">
+          <polyline fill="none" stroke="#c4604a" stroke-width="1.5" points="0,8 10,10 20,12 30,14 40,18 50,20 60,22"/>
+        </svg>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Emerging Pairs</div>
+        <div class="kpi-val" id="kpi4">89</div>
+        <div class="kpi-delta up">↑ 22% vs last period</div>
+        <svg class="kpi-spark" width="60" height="28" viewBox="0 0 60 28">
+          <polyline fill="none" stroke="#e8a24a" stroke-width="1.5" points="0,18 10,16 20,15 30,12 40,10 50,9 60,6"/>
+        </svg>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Geo Markets Active</div>
+        <div class="kpi-val" id="kpi5">48</div>
+        <div class="kpi-delta neu">— All US markets</div>
+        <svg class="kpi-spark" width="60" height="28" viewBox="0 0 60 28">
+          <polyline fill="none" stroke="#6a8a9f" stroke-width="1.5" points="0,14 10,13 20,14 30,12 40,13 50,11 60,12"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 4-PANEL CHART AREA -->
+    <div class="chart-area">
+
+      <!-- PANEL 1: Ingredient Trend Signals -->
+      <div class="chart-panel" style="grid-row:1/3">
+        <div class="cp-head">
+          <div>
+            <div class="cp-title">Ingredient Trend Signals</div>
+            <div class="cp-sub">Ranked by momentum score · 30-day window</div>
+          </div>
+          <div class="cp-controls">
+            <div class="cp-ctrl active">Rising</div>
+            <div class="cp-ctrl">All</div>
+            <div class="cp-ctrl">Declining</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 60px 70px 80px 50px;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid var(--border);">
+          <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">Ingredient</div>
+          <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right">Score</div>
+          <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right">30d Trend</div>
+          <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right">Sparkline</div>
+          <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right">MoM</div>
+        </div>
+        <div class="trend-table" id="trendTable"></div>
+      </div>
+
+      <!-- PANEL 2: Flavor Pair Momentum -->
+      <div class="chart-panel">
+        <div class="cp-head">
+          <div>
+            <div class="cp-title">Flavor Pair Momentum</div>
+            <div class="cp-sub">Emerging combinations · velocity indexed</div>
+          </div>
+          <div class="cp-controls">
+            <div class="cp-ctrl active">Hot</div>
+            <div class="cp-ctrl">All</div>
+          </div>
+        </div>
+        <div class="pairs-grid" id="pairsGrid"></div>
+      </div>
+
+      <!-- PANEL 3: Regional Heatmap -->
+      <div class="chart-panel">
+        <div class="cp-head">
+          <div>
+            <div class="cp-title">Geo Taste Heatmap</div>
+            <div class="cp-sub">Signal intensity by market</div>
+          </div>
+          <div class="cp-controls">
+            <div class="cp-ctrl active">Signals</div>
+            <div class="cp-ctrl">Segments</div>
+          </div>
+        </div>
+        <div class="map-wrap" id="mapWrap">
+          <svg class="map-svg" id="mapSvg" viewBox="0 0 500 300"></svg>
+          <div class="map-legend">
+            <div class="ml-item"><div class="ml-dot" style="background:var(--amber)"></div>High signal</div>
+            <div class="ml-item"><div class="ml-dot" style="background:var(--sage)"></div>Med signal</div>
+            <div class="ml-item"><div class="ml-dot" style="background:var(--slate)"></div>Low signal</div>
+          </div>
+          <div class="map-tooltip" id="mapTooltip"></div>
+        </div>
+      </div>
+
+      <!-- PANEL 4: Occasion Intelligence -->
+      <div class="chart-panel">
+        <div class="cp-head">
+          <div>
+            <div class="cp-title">Occasion Intelligence</div>
+            <div class="cp-sub">Taste signal strength by consumption moment</div>
+          </div>
+        </div>
+        <div class="occasions-list" id="occasionsList"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- RIGHT: ALERTS + CONFIDENCE -->
+  <aside class="right-panel">
+
+    <div class="rp-section">
+      <div class="rp-head">
+        Signal Alerts
+        <span class="cnt">7 new</span>
+      </div>
+    </div>
+
+    <div class="alert-feed" id="alertFeed"></div>
+
+    <div class="rp-section" style="flex-shrink:0;margin-top:auto;">
+      <div class="rp-head">Prediction Confidence</div>
+      <div id="confList"></div>
+    </div>
+
+  </aside>
+
+</div>
+
+<!-- STATUS BAR -->
+<footer class="status-bar">
+  <div class="sb-item"><div class="sb-dot"></div>Atlas v2.1 connected</div>
+  <div class="sb-sep"></div>
+  <div class="sb-item">847,312 menu items indexed</div>
+  <div class="sb-sep"></div>
+  <div class="sb-item">Capture: 12 events active</div>
+  <div class="sb-sep"></div>
+  <div class="sb-item">Meal Ticket: 48,291 active profiles</div>
+  <div class="sb-sep"></div>
+  <div class="sb-item" style="margin-left:auto;">Powered by Taste Intelligence</div>
+</footer>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+
+const INGREDIENTS = [
+  { name: 'Yuzu Kosho',      cat: 'Spices & Heat',    score: 94, chg: '+38%', up: true,  pts:[2,4,5,6,7,9,10,12,13,14] },
+  { name: 'Black Garlic',    cat: 'Fermented',         score: 91, chg: '+31%', up: true,  pts:[5,6,6,8,9,9,11,11,12,13] },
+  { name: 'Calabrian Chili', cat: 'Spices & Heat',    score: 88, chg: '+27%', up: true,  pts:[3,4,5,6,7,8,9,10,11,12] },
+  { name: 'Miso Butter',     cat: 'Fermented',         score: 87, chg: '+24%', up: true,  pts:[4,5,6,6,7,8,9,9,10,11] },
+  { name: 'Ube',             cat: 'Vegetables',        score: 85, chg: '+22%', up: true,  pts:[6,7,7,8,8,9,9,10,10,11] },
+  { name: 'Chili Crisp',     cat: 'Spices & Heat',    score: 84, chg: '+19%', up: true,  pts:[5,6,7,7,8,8,9,9,10,10] },
+  { name: 'Tepache',         cat: 'Fermented',         score: 81, chg: '+17%', up: true,  pts:[3,3,4,5,6,6,7,8,8,9]  },
+  { name: 'Calamansi',       cat: 'Vegetables',        score: 79, chg: '+15%', up: true,  pts:[4,5,5,6,6,7,7,8,8,9]  },
+  { name: 'Nduja',           cat: 'Proteins',          score: 76, chg: '+13%', up: true,  pts:[5,5,6,6,7,7,7,8,8,9]  },
+  { name: 'Koji',            cat: 'Fermented',         score: 74, chg: '+11%', up: true,  pts:[4,5,5,6,6,6,7,7,8,8]  },
+  { name: 'Brown Butter',    cat: 'Dairy & Alt Dairy', score: 71, chg: '+9%',  up: true,  pts:[5,5,6,6,6,7,7,7,8,8]  },
+  { name: 'Za\'atar',        cat: 'Spices & Heat',    score: 68, chg: '+7%',  up: true,  pts:[4,5,5,5,6,6,6,7,7,8]  },
+  { name: 'Teff',            cat: 'Grains & Ancient',  score: 62, chg: '-4%',  up: false, pts:[9,8,8,8,7,7,6,6,5,5]  },
+  { name: 'Aquafaba',        cat: 'Proteins',          score: 55, chg: '-9%',  up: false, pts:[9,9,8,8,7,7,6,5,5,4]  },
+];
+
+const PAIRS = [
+  { a:'Miso',    b:'Caramel',  mom:'Very High',  pct:88, idx:'+2.4×', c:'var(--amber)',  ctx:'Dessert / Snack'  },
+  { a:'Yuzu',    b:'Honey',    mom:'High',       pct:74, idx:'+1.9×', c:'var(--terra)',  ctx:'Beverage / Bar'   },
+  { a:'Chili',   b:'Chocolate',mom:'High',       pct:72, idx:'+1.8×', c:'var(--terra)',  ctx:'Confectionery'    },
+  { a:'Ube',     b:'Coconut',  mom:'Rising',     pct:68, idx:'+1.6×', c:'var(--plum)',   ctx:'Dessert'          },
+  { a:'Dashi',   b:'Butter',   mom:'Rising',     pct:61, idx:'+1.4×', c:'var(--sage)',   ctx:'Fine Dining'      },
+  { a:'Tahini',  b:'Citrus',   mom:'Emerging',   pct:54, idx:'+1.2×', c:'var(--slate)',  ctx:'Spreads / Sauces' },
+  { a:'Black Sesame',b:'Vanilla', mom:'Emerging', pct:49,idx:'+1.1×', c:'var(--muted)', ctx:'Bakery / Dessert' },
+  { a:'Koji',    b:'Cream',    mom:'Watch',      pct:42, idx:'+0.9×', c:'var(--muted)',  ctx:'Dairy Innovation' },
+];
+
+const CITIES = [
+  { name:'New York',       x:390, y:90,  r:22, sig:'High',    trend:'+28%', top:'Yuzu Kosho, Black Garlic', c:'#e8a24a' },
+  { name:'Los Angeles',    x:80,  y:180, r:20, sig:'High',    trend:'+24%', top:'Ube, Calamansi',           c:'#e8a24a' },
+  { name:'Chicago',        x:300, y:105, r:17, sig:'High',    trend:'+19%', top:'Miso Butter, Nduja',       c:'#e8a24a' },
+  { name:'Houston',        x:260, y:210, r:16, sig:'Med',     trend:'+15%', top:'Calabrian Chili, Tepache', c:'#7a9b76' },
+  { name:'Miami',          x:360, y:230, r:14, sig:'Med',     trend:'+13%', top:'Chili Crisp, Calamansi',   c:'#7a9b76' },
+  { name:'Austin',         x:245, y:215, r:15, sig:'High',    trend:'+31%', top:'Tepache, Yuzu Kosho',      c:'#e8a24a' },
+  { name:'Seattle',        x:75,  y:60,  r:14, sig:'High',    trend:'+22%', top:'Koji, Chili Crisp',        c:'#e8a24a' },
+  { name:'San Francisco',  x:60,  y:155, r:16, sig:'High',    trend:'+26%', top:'Ube, Black Garlic',        c:'#e8a24a' },
+  { name:'Atlanta',        x:340, y:195, r:13, sig:'Med',     trend:'+11%', top:'Chili Crisp, Za\'atar',    c:'#7a9b76' },
+  { name:'Denver',         x:195, y:130, r:12, sig:'Med',     trend:'+14%', top:'Miso Butter, Brown Butter',c:'#7a9b76' },
+  { name:'Nashville',      x:320, y:175, r:12, sig:'Med',     trend:'+10%', top:'Calabrian Chili, Nduja',   c:'#7a9b76' },
+  { name:'Phoenix',        x:130, y:190, r:11, sig:'Low',     trend:'+8%',  top:'Ube, Za\'atar',            c:'#6a8a9f' },
+  { name:'Minneapolis',    x:275, y:80,  r:10, sig:'Low',     trend:'+7%',  top:'Black Garlic, Koji',       c:'#6a8a9f' },
+  { name:'Portland',       x:72,  y:75,  r:10, sig:'Med',     trend:'+17%', top:'Koji, Tepache',            c:'#7a9b76' },
+  { name:'Boston',         x:405, y:82,  r:13, sig:'Med',     trend:'+18%', top:'Nduja, Black Garlic',      c:'#7a9b76' },
+];
+
+const OCCASIONS = [
+  { icon:'🍳', name:'Morning Ritual',  sub:'Breakfast & brunch',        pct:87, c:'#e8a24a' },
+  { icon:'🥗', name:'Healthy Lunch',   sub:'Weekday midday',            pct:74, c:'#7a9b76' },
+  { icon:'🍷', name:'Weekend Dining',  sub:'Fri–Sun dinner out',        pct:91, c:'#c4604a' },
+  { icon:'🍸', name:'Bar & Cocktails', sub:'Evening social',            pct:68, c:'#9b6eb5' },
+  { icon:'🌮', name:'Casual Weeknight',sub:'Quick weeknight meal',      pct:62, c:'#6a8a9f' },
+  { icon:'🎉', name:'Celebration',     sub:'Special occasions',         pct:55, c:'#d4845a' },
+  { icon:'☕', name:'Afternoon Snack', sub:'3pm treat moment',          pct:48, c:'#c4a26a' },
+  { icon:'🏠', name:'Home Cooking',    sub:'Weekend kitchen exploration',pct:44, c:'#8a7a9b' },
+];
+
+const ALERTS = [
+  { type:'surge',   title:'Yuzu Kosho surging +38% in Northeast restaurants — 3× above category avg', time:'2m ago',   badges:[{t:'Northeast',cl:'market'},{t:'Fine Dining',cl:'segment'}] },
+  { type:'spike',   title:'Tepache momentum spike detected across 4 Southwest markets',                 time:'14m ago',  badges:[{t:'Southwest',cl:'market'},{t:'Beverage',cl:'segment'},{t:'New',cl:'new-tag'}] },
+  { type:'cross',   title:'Miso × Caramel crossover now appearing in mass-market menus — early signal', time:'31m ago',  badges:[{t:'National',cl:'market'},{t:'Dessert',cl:'segment'}] },
+  { type:'new',     title:'Black Sesame + Vanilla emerging in NYC, LA, and Chicago bakeries',           time:'1h ago',   badges:[{t:'Metro Markets',cl:'market'},{t:'New',cl:'new-tag'}] },
+  { type:'decline', title:'Aquafaba declining across all segments — down 9% MoM',                       time:'2h ago',   badges:[{t:'National',cl:'market'},{t:'Plant-based',cl:'segment'}] },
+  { type:'surge',   title:'Ube adoption accelerating in Midwest chains — 3 months ahead of forecast',  time:'3h ago',   badges:[{t:'Midwest',cl:'market'},{t:'QSR',cl:'segment'}] },
+  { type:'cross',   title:'Calabrian Chili entering retail CPG — 14 new SKUs detected this month',      time:'4h ago',   badges:[{t:'Retail',cl:'market'},{t:'Spice',cl:'segment'}] },
+];
+
+const CONFIDENCE = [
+  { label:'Rising ingredient signals', pct:94, c:'var(--up)' },
+  { label:'Flavor pair trajectories',  pct:88, c:'var(--amber)' },
+  { label:'Geo trend mapping',         pct:82, c:'var(--amber)' },
+  { label:'Archetype attribution',     pct:76, c:'var(--muted)' },
+];
+
+const TICKER_DATA = [
+  ...INGREDIENTS.map(i => ({ name: i.name, val: i.score, chg: i.chg, up: i.up })),
+  { name: 'MISO × CARAMEL', val: 88, chg: '+2.4×', up: true },
+  { name: 'YUZU × HONEY',   val: 74, chg: '+1.9×', up: true },
+  { name: 'CHILI × CHOC',   val: 72, chg: '+1.8×', up: true },
+];
+
+// ── RENDER TICKER ──────────────────────────────────────────────────────────
+function renderTicker() {
+  const track = document.getElementById('tickerTrack');
+  const html = [...TICKER_DATA, ...TICKER_DATA].map(t => `
+    <div class="tick-item">
+      <span class="tick-name">${t.name}</span>
+      <span class="tick-val ${t.up?'tick-up':'tick-down'}">${t.val}</span>
+      <span class="tick-chg">${t.chg}</span>
+    </div>
+  `).join('');
+  track.innerHTML = html;
+}
+
+// ── RENDER TREND TABLE ─────────────────────────────────────────────────────
+function sparkPath(pts, w=70, h=22) {
+  const min = Math.min(...pts), max = Math.max(...pts), range = max - min || 1;
+  const coords = pts.map((p, i) => {
+    const x = (i / (pts.length - 1)) * w;
+    const y = h - ((p - min) / range) * (h - 2) - 1;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  });
+  return coords.join(' ');
+}
+
+function renderTrendTable() {
+  const table = document.getElementById('trendTable');
+  const rising = INGREDIENTS.filter(i => i.up);
+  table.innerHTML = rising.map((ing, idx) => `
+    <div class="tt-row ${idx===0?'selected':''}" onclick="selectRow(this)">
+      <div>
+        <div class="tt-name">${ing.name}</div>
+        <div class="tt-cat">${ing.cat}</div>
+      </div>
+      <div class="tt-score" style="color:${ing.score>85?'var(--up)':ing.score>70?'var(--amber)':'var(--muted)'}">${ing.score}</div>
+      <div>
+        <svg class="spark" width="70" height="22" viewBox="0 0 70 22">
+          <polyline fill="none" stroke="${ing.up?'#7a9b76':'#c4604a'}" stroke-width="1.5"
+            points="${sparkPath(ing.pts)}"/>
+          <circle cx="${(9/9)*70}" cy="${22 - ((ing.pts[9]-Math.min(...ing.pts))/(Math.max(...ing.pts)-Math.min(...ing.pts)||1))*(20)+1}" r="2.5" fill="${ing.up?'#7a9b76':'#c4604a'}"/>
+        </svg>
+      </div>
+      <div style="text-align:right;">
+        <div class="tt-chg" style="color:${ing.up?'var(--up)':'var(--down)'}">${ing.chg}</div>
+        <div class="tt-vel">MoM</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectRow(el) {
+  document.querySelectorAll('.tt-row').forEach(r => r.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ── RENDER PAIRS ──────────────────────────────────────────────────────────
+function renderPairs() {
+  const grid = document.getElementById('pairsGrid');
+  grid.innerHTML = PAIRS.map(p => `
+    <div class="pair-card" style="--pc:${p.c}" onclick="this.style.borderColor='var(--amber)'">
+      <div class="pair-names">${p.a}<span class="pair-join">×</span>${p.b}</div>
+      <div class="pair-momentum" style="color:${p.c}">${p.mom}</div>
+      <div class="pair-bar-bg"><div class="pair-bar" style="width:${p.pct}%"></div></div>
+      <div class="pair-meta">
+        <span class="pair-context">${p.ctx}</span>
+        <span class="pair-index" style="color:${p.c}">${p.idx}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── RENDER MAP ─────────────────────────────────────────────────────────────
+function renderMap() {
+  const svg = document.getElementById('mapSvg');
+  const tooltip = document.getElementById('mapTooltip');
+  const mapWrap = document.getElementById('mapWrap');
+
+  // Simple US outline path (approximate)
+  const usBg = document.createElementNS('http://www.w3.org/2000/svg','rect');
+  usBg.setAttribute('width','500'); usBg.setAttribute('height','300');
+  usBg.setAttribute('fill','none');
+  svg.appendChild(usBg);
+
+  // Add a faint US boundary shape
+  const border = document.createElementNS('http://www.w3.org/2000/svg','path');
+  border.setAttribute('d', 'M55,55 L130,45 L200,50 L280,48 L360,50 L430,55 L450,70 L445,90 L440,110 L430,140 L420,165 L410,190 L395,215 L380,235 L360,245 L330,250 L290,248 L250,250 L215,248 L180,245 L150,240 L120,230 L100,215 L85,200 L75,180 L65,160 L55,135 L50,110 L52,85 Z');
+  border.setAttribute('fill','none'); border.setAttribute('stroke','rgba(255,255,255,0.05)'); border.setAttribute('stroke-width','1');
+  svg.appendChild(border);
+
+  // State grid lines (very faint)
+  [100,150,200,250,300,350,400].forEach(x => {
+    const l = document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1',x); l.setAttribute('y1','45'); l.setAttribute('x2',x); l.setAttribute('y2','255');
+    l.setAttribute('stroke','rgba(255,255,255,0.03)'); l.setAttribute('stroke-width','1');
+    svg.appendChild(l);
+  });
+  [80,120,160,200,240].forEach(y => {
+    const l = document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1','55'); l.setAttribute('y1',y); l.setAttribute('x2','450'); l.setAttribute('y2',y);
+    l.setAttribute('stroke','rgba(255,255,255,0.03)'); l.setAttribute('stroke-width','1');
+    svg.appendChild(l);
+  });
+
+  CITIES.forEach(city => {
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.setAttribute('class','map-bubble');
+    g.style.cursor = 'pointer';
+
+    // Glow
+    const glow = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    glow.setAttribute('cx', city.x); glow.setAttribute('cy', city.y);
+    glow.setAttribute('r', city.r + 6);
+    glow.setAttribute('fill', city.c); glow.setAttribute('opacity','0.08');
+    g.appendChild(glow);
+
+    // Main circle
+    const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    circle.setAttribute('cx', city.x); circle.setAttribute('cy', city.y);
+    circle.setAttribute('r', city.r);
+    circle.setAttribute('fill', city.c); circle.setAttribute('opacity','0.55');
+    g.appendChild(circle);
+
+    // Pulse ring
+    const ring = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    ring.setAttribute('cx', city.x); ring.setAttribute('cy', city.y);
+    ring.setAttribute('r', city.r);
+    ring.setAttribute('fill','none'); ring.setAttribute('stroke', city.c); ring.setAttribute('stroke-width','1');
+    ring.setAttribute('opacity','0.7');
+    g.appendChild(ring);
+
+    // Label
+    const text = document.createElementNS('http://www.w3.org/2000/svg','text');
+    text.setAttribute('x', city.x); text.setAttribute('y', city.y + city.r + 10);
+    text.setAttribute('text-anchor','middle'); text.setAttribute('class','map-label');
+    text.setAttribute('font-size','7');
+    text.textContent = city.name.split(' ')[0];
+    g.appendChild(text);
+
+    g.addEventListener('mouseenter', (e) => {
+      tooltip.innerHTML = `
+        <div class="mtt-city">${city.name}</div>
+        <div class="mtt-item"><span>Signal strength</span><span class="mtt-val">${city.sig}</span></div>
+        <div class="mtt-item"><span>30d trend</span><span class="mtt-val" style="color:var(--up)">${city.trend}</span></div>
+        <div class="mtt-item"><span>Top signals</span></div>
+        <div style="font-size:9px;color:var(--amber);margin-top:3px">${city.top}</div>
+      `;
+      const rect = mapWrap.getBoundingClientRect();
+      const gRect = g.getBoundingClientRect();
+      let tx = gRect.left - rect.left + 15;
+      let ty = gRect.top - rect.top - 10;
+      if (tx + 150 > rect.width) tx = gRect.left - rect.left - 145;
+      tooltip.style.left = tx + 'px';
+      tooltip.style.top = ty + 'px';
+      tooltip.classList.add('visible');
+      circle.setAttribute('opacity','0.8');
+    });
+    g.addEventListener('mouseleave', () => {
+      tooltip.classList.remove('visible');
+      circle.setAttribute('opacity','0.55');
+    });
+
+    svg.appendChild(g);
+  });
+}
+
+// ── RENDER OCCASIONS ──────────────────────────────────────────────────────
+function renderOccasions() {
+  const list = document.getElementById('occasionsList');
+  list.innerHTML = OCCASIONS.map(o => `
+    <div class="occ-row">
+      <div class="occ-icon">${o.icon}</div>
+      <div style="flex:1;min-width:0">
+        <div class="occ-name">${o.name}</div>
+        <div class="occ-sub">${o.sub}</div>
+      </div>
+      <div class="occ-bar-wrap">
+        <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:${o.pct}%;background:${o.c}"></div></div>
+      </div>
+      <div class="occ-pct" style="color:${o.c}">${o.pct}</div>
+    </div>
+  `).join('');
+}
+
+// ── RENDER ALERTS ─────────────────────────────────────────────────────────
+function renderAlerts() {
+  const feed = document.getElementById('alertFeed');
+  feed.innerHTML = ALERTS.map(a => `
+    <div class="alert-item">
+      <div class="alert-top">
+        <div class="alert-icon ${a.type}">${
+          a.type==='surge'?'↑':a.type==='spike'?'⚡':a.type==='cross'?'×':a.type==='new'?'★':'↓'
+        }</div>
+        <div>
+          <div class="alert-title">${a.title}</div>
+          <div class="alert-meta">${a.time}</div>
+        </div>
+      </div>
+      <div class="alert-badge-row">
+        ${a.badges.map(b=>`<span class="alert-badge ${b.cl}">${b.t}</span>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── RENDER CONFIDENCE ─────────────────────────────────────────────────────
+function renderConfidence() {
+  const list = document.getElementById('confList');
+  list.innerHTML = CONFIDENCE.map(c => `
+    <div class="conf-row">
+      <div class="conf-label">${c.label}</div>
+      <div class="conf-bar-bg"><div class="conf-bar-fill" style="width:${c.pct}%;background:${c.c}"></div></div>
+      <div class="conf-pct">${c.pct}%</div>
+    </div>
+  `).join('');
+}
+
+// ── INTERACTIONS ──────────────────────────────────────────────────────────
+function toggleFilter(el) {
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+}
+function selectArch(el) {
+  document.querySelectorAll('.archetype-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function toggleAlerts() { /* could open a drawer */ }
+
+// Module tab switching
+document.querySelectorAll('.tb-mod').forEach(m => {
+  m.addEventListener('click', () => {
+    document.querySelectorAll('.tb-mod').forEach(x => x.classList.remove('active'));
+    m.classList.add('active');
+  });
+});
+
+// Period/market filter controls
+document.querySelectorAll('.cp-ctrl').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const parent = this.closest('.cp-controls');
+    parent.querySelectorAll('.cp-ctrl').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// Live clock
+function updateTime() {
+  const now = new Date();
+  const t = now.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+  document.getElementById('livetime').textContent = `Live · ${t}`;
+}
+setInterval(updateTime, 1000);
+updateTime();
+
+// Subtle KPI animation on load
+function animateKPIs() {
+  const targets = [1847, 243, 67, 89, 48];
+  const ids = ['kpi1','kpi2','kpi3','kpi4','kpi5'];
+  ids.forEach((id, i) => {
+    const el = document.getElementById(id);
+    let current = 0;
+    const target = targets[i];
+    const step = Math.ceil(target / 40);
+    const timer = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = current.toLocaleString();
+      if (current >= target) clearInterval(timer);
+    }, 20);
+  });
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+renderTicker();
+renderTrendTable();
+renderPairs();
+renderMap();
+renderOccasions();
+renderAlerts();
+renderConfidence();
+setTimeout(animateKPIs, 300);
+</script>
+</body>
+</html>

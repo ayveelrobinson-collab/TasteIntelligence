@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Validation — Concept Scoring · Taste Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── STYRENE B font-face: add your licensed .woff2 files or link via Adobe Fonts.
+   Falls back to Georgia until loaded. Example:
+   @font-face { font-family: "Styrene B"; src: url("fonts/StyreneB-Regular.woff2") format("woff2"); font-weight:400; }
+   @font-face { font-family: "Styrene B"; src: url("fonts/StyreneB-Medium.woff2")  format("woff2"); font-weight:500; }
+*/
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0c0b09;--s1:#131109;--s2:#1a1812;--s3:#22201a;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.04);
+  --amber:#e8a24a;--amber-bg:rgba(232,162,74,0.08);--amber-glow:rgba(232,162,74,0.18);
+  --terra:#c4604a;--terra-bg:rgba(196,96,74,0.1);
+  --sage:#7a9b76;--sage-bg:rgba(122,155,118,0.1);
+  --slate:#6a8a9f;--slate-bg:rgba(106,138,159,0.1);
+  --plum:#9b6eb5;--cream:#f0e8d8;--muted:#6b6459;--text:#c8bfb0;
+  --up:#7a9b76;--down:#c4604a;
+}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:12px;letter-spacing:-0.01em;display:flex;flex-direction:column}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.03'/%3E%3C/svg%3E");opacity:.5}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;height:48px;flex-shrink:0;background:var(--s1);border-bottom:1px solid var(--border);padding:0 20px;gap:0;position:relative;z-index:100}
+.tb-logo{font-family:'Styrene B','Georgia',serif;font-size:16px;font-weight:300;color:var(--cream);letter-spacing:.04em;margin-right:32px}
+.tb-logo em{color:var(--amber);font-style:italic}
+.tb-modules{display:flex;gap:0;margin-right:auto}
+.tb-mod{padding:0 18px;height:48px;display:flex;align-items:center;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:color .2s}
+.tb-mod:hover{color:var(--text)}
+.tb-mod.active{color:var(--sage);border-bottom-color:var(--sage)}
+.tb-right{display:flex;align-items:center;gap:12px}
+.tb-btn{padding:6px 14px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.tb-btn.outline{background:none;border:1px solid var(--border);color:var(--muted)}
+.tb-btn.outline:hover{border-color:var(--sage);color:var(--sage)}
+.tb-btn.primary{background:var(--sage);border:1px solid var(--sage);color:var(--bg);font-weight:600}
+.tb-btn.primary:hover{background:var(--up)}
+
+/* MAIN */
+.main{display:grid;grid-template-columns:300px 1fr 280px;flex:1;min-height:0;overflow:hidden}
+
+/* LEFT — CONCEPT INPUT */
+.left-panel{background:var(--s1);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden}
+.left-panel::-webkit-scrollbar{width:3px}
+.left-panel::-webkit-scrollbar-thumb{background:var(--muted)}
+.lp-sec{padding:16px;border-bottom:1px solid var(--border2)}
+.lp-head{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.concept-card{padding:14px;background:var(--s2);border:1px solid var(--amber);margin-bottom:10px;cursor:pointer;position:relative}
+.concept-card::before{content:'ACTIVE';position:absolute;top:8px;right:8px;font-size:8px;font-family:'Poppins',sans-serif;font-weight:700;color:var(--bg);background:var(--sage);padding:2px 6px;letter-spacing:.08em}
+.cc-name{font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;color:var(--cream);margin-bottom:4px}
+.cc-sub{font-size:10px;color:var(--muted);line-height:1.5}
+.cc-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:8px}
+.cc-tag{font-size:8px;padding:2px 6px;background:var(--s3);color:var(--muted);letter-spacing:.06em}
+.concept-card.other{border-color:var(--border);opacity:.6}
+.concept-card.other::before{display:none}
+.concept-card.other .cc-name{font-size:12px}
+.input-field{width:100%;background:var(--s2);border:1px solid var(--border);padding:8px 10px;font-family:'Inter',sans-serif;font-size:11px;color:var(--text);outline:none;margin-bottom:6px;transition:border-color .2s}
+.input-field:focus{border-color:var(--sage)}
+.input-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+select.input-field option{background:#1a1812}
+.target-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;background:var(--sage-bg);border:1px solid var(--sage);font-size:9px;color:var(--sage);margin:2px;cursor:pointer}
+.score-hist{margin-top:4px}
+.sh-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:10px}
+.sh-label{width:90px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sh-bar-bg{flex:1;height:4px;background:var(--s3);border-radius:2px}
+.sh-bar{height:4px;border-radius:2px;background:var(--sage)}
+.sh-val{width:24px;text-align:right;font-family:'Poppins',sans-serif;font-weight:700;font-size:10px;color:var(--amber)}
+
+/* CENTER */
+.center{display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
+
+/* SCORE HERO */
+.score-hero{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);flex-shrink:0}
+.score-card{padding:24px;display:flex;flex-direction:column;align-items:center;border-right:1px solid var(--border);position:relative;overflow:hidden}
+.score-card:last-child{border-right:none}
+.sc-label{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.gauge-wrap{position:relative;width:120px;height:72px;margin-bottom:8px}
+.gauge-num{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;line-height:1}
+.gauge-grade{position:absolute;top:8px;right:0;font-size:10px;font-family:'Poppins',sans-serif;font-weight:700;padding:2px 6px}
+.sc-verdict{font-size:11px;color:var(--cream);text-align:center;margin-top:6px;line-height:1.5}
+.sc-sub{font-size:9px;color:var(--muted);text-align:center;margin-top:4px}
+.composite-big{font-family:'Poppins',sans-serif;font-size:56px;font-weight:800;color:var(--sage);line-height:1}
+.composite-label{font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
+.comp-bar-bg{width:120px;height:5px;background:var(--s3);border-radius:2px;margin-top:10px}
+.comp-bar{height:5px;border-radius:2px;background:var(--sage)}
+
+/* DETAIL AREA */
+.detail-area{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;min-height:0;overflow:hidden}
+.dp{border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:16px;display:flex;flex-direction:column;overflow:hidden}
+.dp:nth-child(2){border-right:none}
+.dp:nth-child(3){border-bottom:none}
+.dp:nth-child(4){border-right:none;border-bottom:none}
+.dp-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-shrink:0}
+.dp-title{font-family:'Poppins',sans-serif;font-size:12px;font-weight:700;color:var(--cream)}
+.dp-sub{font-size:9px;color:var(--muted);margin-top:1px}
+
+/* DEMO BREAKDOWN */
+.demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;flex:1;overflow:hidden}
+.demo-seg{background:var(--s2);border:1px solid var(--border);padding:10px;display:flex;flex-direction:column;gap:4px}
+.ds-label{font-size:9px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.ds-score{font-family:'Poppins',sans-serif;font-size:20px;font-weight:800;color:var(--cream)}
+.ds-bar-bg{height:3px;background:var(--s3);border-radius:2px}
+.ds-bar{height:3px;border-radius:2px}
+.ds-insight{font-size:9px;color:var(--muted);line-height:1.4}
+
+/* GEO */
+.geo-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;flex:1;overflow:hidden}
+.geo-card{background:var(--s2);border:1px solid var(--border);padding:9px;display:flex;flex-direction:column;gap:3px;cursor:pointer;transition:border-color .2s}
+.geo-card:hover{border-color:var(--sage)}
+.gc-city{font-size:10px;color:var(--cream);font-weight:500}
+.gc-score{font-family:'Poppins',sans-serif;font-size:16px;font-weight:800}
+.gc-bar-bg{height:3px;background:var(--s3);border-radius:2px}
+.gc-bar{height:3px;border-radius:2px}
+.gc-tag{font-size:8px;color:var(--muted)}
+
+/* BENCHMARK */
+.bench-table{flex:1;overflow-y:auto}
+.bench-table::-webkit-scrollbar{width:2px}
+.bench-table::-webkit-scrollbar-thumb{background:var(--muted)}
+.bt-row{display:grid;grid-template-columns:1fr 50px 50px 50px;align-items:center;padding:7px 0;border-bottom:1px solid var(--border2);gap:4px}
+.bt-row:last-child{border-bottom:none}
+.bt-name{font-size:10px;color:var(--text)}
+.bt-name.highlight{color:var(--amber);font-weight:600}
+.bt-val{font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;text-align:right}
+.bt-tag{font-size:8px;padding:1px 5px;text-align:center}
+.bt-tag.you{background:var(--sage-bg);color:var(--sage)}
+.bt-tag.comp{background:var(--s3);color:var(--muted)}
+.bt-tag.top{background:rgba(232,162,74,.1);color:var(--amber)}
+
+/* AB TEST */
+.ab-wrap{flex:1;display:flex;flex-direction:column;gap:6px;overflow:hidden}
+.ab-row{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--s2);border:1px solid var(--border)}
+.ab-variant{font-family:'Poppins',sans-serif;font-size:10px;font-weight:700;width:20px;color:var(--amber);flex-shrink:0}
+.ab-label{flex:1;font-size:10px;color:var(--text)}
+.ab-bar-wrap{flex:1;position:relative;height:6px;background:var(--s3);border-radius:3px;overflow:hidden}
+.ab-bar-fill{height:100%;border-radius:3px;transition:width 1s ease}
+.ab-score{font-family:'Poppins',sans-serif;font-size:12px;font-weight:700;width:32px;text-align:right}
+.ab-winner{font-size:8px;padding:1px 5px;background:var(--sage-bg);color:var(--sage);letter-spacing:.06em;white-space:nowrap}
+
+/* RIGHT */
+.right-panel{background:var(--s1);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.rp-sec{padding:14px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
+.rp-head{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.verdict-box{padding:14px;background:var(--sage-bg);border:1px solid var(--sage);margin-bottom:10px}
+.vb-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);margin-bottom:6px}
+.vb-text{font-family:'Styrene B','Georgia',serif;font-size:16px;font-style:italic;color:var(--cream);line-height:1.5}
+.risk-item{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid var(--border2);align-items:flex-start}
+.risk-item:last-child{border-bottom:none}
+.risk-icon{font-size:12px;flex-shrink:0;margin-top:1px}
+.risk-label{font-size:10px;color:var(--cream);line-height:1.4;flex:1}
+.risk-lvl{font-size:8px;padding:1px 6px;font-family:'Poppins',sans-serif;font-weight:700;white-space:nowrap;letter-spacing:.06em}
+.risk-lvl.high{background:var(--terra-bg);color:var(--terra)}
+.risk-lvl.med{background:var(--amber-bg);color:var(--amber)}
+.risk-lvl.low{background:var(--sage-bg);color:var(--sage)}
+.action-btn{width:100%;padding:10px;background:var(--sage);border:none;color:var(--bg);font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;margin-bottom:6px;transition:background .2s}
+.action-btn:hover{background:var(--up)}
+.action-btn.ghost{background:none;border:1px solid var(--border);color:var(--muted)}
+.action-btn.ghost:hover{border-color:var(--sage);color:var(--sage)}
+.rp-scroll{flex:1;overflow-y:auto;padding:14px 16px}
+.rp-scroll::-webkit-scrollbar{width:2px}
+.rp-scroll::-webkit-scrollbar-thumb{background:var(--muted)}
+.suggest-item{padding:10px;background:var(--s2);border:1px solid var(--border);margin-bottom:6px;cursor:pointer;transition:border-color .2s}
+.suggest-item:hover{border-color:var(--amber)}
+.si-name{font-size:11px;color:var(--cream);margin-bottom:3px}
+.si-score{font-family:'Poppins',sans-serif;font-size:10px;font-weight:700;color:var(--amber)}
+.si-why{font-size:9px;color:var(--muted);margin-top:3px;line-height:1.4}
+
+.status-bar{height:26px;flex-shrink:0;background:var(--s1);border-top:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:16px}
+.sb-item{font-size:9px;color:var(--muted);letter-spacing:.08em;display:flex;align-items:center;gap:5px}
+.sb-dot{width:5px;height:5px;border-radius:50%;background:var(--sage)}
+.sb-sep{width:1px;height:12px;background:var(--border)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="tb-logo">Taste <em>Intelligence</em></div>
+  <nav class="tb-modules">
+    <div class="tb-mod">Perception</div>
+    <div class="tb-mod active">Validation</div>
+    <div class="tb-mod">Foresight</div>
+    <div class="tb-mod">Creation</div>
+  </nav>
+  <div class="tb-right">
+    <div class="tb-btn outline" onclick="cycleConceptI()">← Prev Concept</div>
+    <div class="tb-btn outline" onclick="cycleConcept()">Next Concept →</div>
+    <div class="tb-btn primary">+ New Concept</div>
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- LEFT: CONCEPT QUEUE -->
+  <aside class="left-panel">
+    <div class="lp-sec">
+      <div class="lp-head">Concept Queue</div>
+      <div id="conceptQueue"></div>
+    </div>
+    <div class="lp-sec">
+      <div class="lp-head">Target Segment</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px" id="segChips"></div>
+      <div class="input-label">Occasion</div>
+      <select class="input-field">
+        <option>Weekend Dining</option>
+        <option>Casual Weeknight</option>
+        <option>Morning Ritual</option>
+        <option>Bar & Cocktails</option>
+        <option>Celebration</option>
+      </select>
+      <div class="input-label" style="margin-top:8px">Channel</div>
+      <select class="input-field">
+        <option>Restaurant (Full Service)</option>
+        <option>QSR / Fast Casual</option>
+        <option>Retail CPG</option>
+        <option>Grocery Fresh Prep</option>
+      </select>
+      <div class="input-label" style="margin-top:8px">Geography</div>
+      <select class="input-field">
+        <option>United States (National)</option>
+        <option>Northeast</option>
+        <option>Southeast</option>
+        <option>West Coast</option>
+        <option>Southwest</option>
+      </select>
+    </div>
+    <div class="lp-sec" style="flex:1;border-bottom:none">
+      <div class="lp-head">Score History</div>
+      <div class="score-hist" id="scoreHist"></div>
+    </div>
+  </aside>
+
+  <!-- CENTER -->
+  <main class="center">
+
+    <div class="score-hero">
+      <!-- Taste Fit -->
+      <div class="score-card">
+        <div class="sc-label">Taste Fit Score</div>
+        <div class="gauge-wrap">
+          <svg width="120" height="72" viewBox="0 0 120 72">
+            <path d="M10,68 A54,54 0 0,1 110,68" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="8" stroke-linecap="round"/>
+            <path id="gaugeTF" d="M10,68 A54,54 0 0,1 110,68" fill="none" stroke="#7a9b76" stroke-width="8" stroke-linecap="round" stroke-dasharray="170" stroke-dashoffset="30"/>
+          </svg>
+          <div class="gauge-num" style="color:var(--sage)" id="tfNum">87</div>
+          <div class="gauge-grade" style="background:var(--sage-bg);color:var(--sage)">A</div>
+        </div>
+        <div class="sc-verdict">Strong alignment with<br>Explorer archetype</div>
+        <div class="sc-sub">Top 12% of all tested concepts</div>
+      </div>
+      <!-- Composite -->
+      <div class="score-card" style="justify-content:center">
+        <div class="sc-label">Composite Score</div>
+        <div class="composite-big" id="compNum">84</div>
+        <div class="composite-label">Overall · Launch-Ready</div>
+        <div class="comp-bar-bg" style="margin:0 auto"><div class="comp-bar" id="compBar" style="width:84%"></div></div>
+        <div style="margin-top:12px;font-size:10px;color:var(--muted);text-align:center;max-width:180px;line-height:1.6">
+          Recommend <span style="color:var(--sage);font-weight:600">proceed to pilot</span> with Explorer and Prestige segments in Northeast markets.
+        </div>
+      </div>
+      <!-- Demand Fit -->
+      <div class="score-card">
+        <div class="sc-label">Demand Fit Score</div>
+        <div class="gauge-wrap">
+          <svg width="120" height="72" viewBox="0 0 120 72">
+            <path d="M10,68 A54,54 0 0,1 110,68" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="8" stroke-linecap="round"/>
+            <path id="gaugeDF" d="M10,68 A54,54 0 0,1 110,68" fill="none" stroke="#e8a24a" stroke-width="8" stroke-linecap="round" stroke-dasharray="170" stroke-dashoffset="42"/>
+          </svg>
+          <div class="gauge-num" style="color:var(--amber)" id="dfNum">81</div>
+          <div class="gauge-grade" style="background:var(--amber-bg);color:var(--amber)">B+</div>
+        </div>
+        <div class="sc-verdict">Strong category demand,<br>moderate market saturation</div>
+        <div class="sc-sub">Growing trend · 18-month window</div>
+      </div>
+    </div>
+
+    <!-- 4 DETAIL PANELS -->
+    <div class="detail-area">
+
+      <!-- Demographic Breakdown -->
+      <div class="dp">
+        <div class="dp-head">
+          <div><div class="dp-title">Demographic Breakdown</div><div class="dp-sub">Taste Fit score by consumer segment</div></div>
+        </div>
+        <div class="demo-grid" id="demoGrid"></div>
+      </div>
+
+      <!-- A/B Variant Comparison -->
+      <div class="dp">
+        <div class="dp-head">
+          <div><div class="dp-title">Variant Comparison</div><div class="dp-sub">A/B concept testing · composite score</div></div>
+          <div style="font-size:9px;color:var(--muted)">5 variants</div>
+        </div>
+        <div class="ab-wrap" id="abWrap"></div>
+      </div>
+
+      <!-- Geo Score Map -->
+      <div class="dp">
+        <div class="dp-head">
+          <div><div class="dp-title">Geographic Appetite</div><div class="dp-sub">Predicted demand fit by market</div></div>
+        </div>
+        <div class="geo-grid" id="geoGrid"></div>
+      </div>
+
+      <!-- Category Benchmark -->
+      <div class="dp">
+        <div class="dp-head">
+          <div><div class="dp-title">Category Benchmark</div><div class="dp-sub">vs. similar concepts in Atlas</div></div>
+          <div style="display:flex;gap:6px">
+            <div style="font-size:8px;padding:2px 6px;background:var(--sage-bg);color:var(--sage)">● You</div>
+            <div style="font-size:8px;padding:2px 6px;background:var(--s3);color:var(--muted)">● Category avg</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 50px 50px 50px;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid var(--border)">
+          <div style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">Concept</div>
+          <div style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right">TF</div>
+          <div style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right">DF</div>
+          <div style="font-size:8px;text-align:center;color:var(--muted)">Type</div>
+        </div>
+        <div class="bench-table" id="benchTable"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- RIGHT: VERDICT + ACTIONS -->
+  <aside class="right-panel">
+    <div class="rp-sec">
+      <div class="rp-head">AI Verdict</div>
+      <div class="verdict-box">
+        <div class="vb-label">Recommendation</div>
+        <div class="vb-text" id="verdictText">This concept has strong taste-market fit. Proceed to restaurant pilot in Northeast and West Coast. Watch for saturation risk in 12–18 months.</div>
+      </div>
+    </div>
+    <div class="rp-sec">
+      <div class="rp-head">Risk Flags</div>
+      <div id="riskList"></div>
+    </div>
+    <div style="padding:14px 16px;border-bottom:1px solid var(--border);flex-shrink:0">
+      <button class="action-btn">Send to Pilot →</button>
+      <button class="action-btn ghost">Export Report</button>
+      <button class="action-btn ghost">Send to Creation</button>
+    </div>
+    <div class="rp-scroll">
+      <div class="rp-head">Similar Concepts</div>
+      <div id="suggestList"></div>
+    </div>
+  </aside>
+</div>
+
+<footer class="status-bar">
+  <div class="sb-item"><div class="sb-dot"></div>Crave v3.2 connected</div>
+  <div class="sb-sep"></div>
+  <div class="sb-item">Atlas: 847K menu items</div>
+  <div class="sb-sep"></div>
+  <div class="sb-item">Meal Ticket: 48K taste profiles</div>
+  <div class="sb-sep"></div>
+  <div class="sb-item" style="margin-left:auto">Powered by Taste Intelligence</div>
+</footer>
+
+<script>
+const CONCEPTS = [
+  { name:'Yuzu Kosho Chicken Sandwich', sub:'Grilled chicken, yuzu kosho aioli, pickled daikon, shiso leaf on brioche', tags:['Japanese-Fusion','Chicken','Heat'], tf:87, df:81, comp:84, verdict:'Strong taste-market fit. Proceed to restaurant pilot in Northeast and West Coast. Watch for saturation risk in 12–18 months.' },
+  { name:'Miso Brown Butter Ramen', sub:'Tonkotsu base, brown butter noodles, black garlic oil, soft egg, nori crisp', tags:['Japanese','Umami','Premium'], tf:91, df:78, comp:85, verdict:'Exceptional taste fit with Explorer and Prestige segments. Demand is building — 6-month lead window before mainstream adoption.' },
+  { name:'Calabrian Chili Honey Pizza', sub:'White base, calabrian chili, local honey, Italian sausage, fresh basil', tags:['Italian-American','Heat-Sweet','Pizza'], tf:83, df:85, comp:84, verdict:'High demand fit across all demographics. Spicy-sweet profile aligns with the fastest-growing taste cluster nationally.' },
+  { name:'Ube Coconut Soft Serve', sub:'Ube ice cream, toasted coconut, pandan jelly, condensed milk drizzle', tags:['Filipino','Dessert','Colorful'], tf:79, df:72, comp:76, verdict:'Strong Explorer and Gen Z fit. Demand is concentrated in coastal metros. Consider limited-time or regional launch first.' },
+];
+let activeIdx = 0;
+
+const DEMOS = [
+  { seg:'Gen Z (18–26)',        score:92, c:'var(--sage)',  insight:'High novelty appeal' },
+  { seg:'Millennials (27–42)',  score:88, c:'var(--amber)', insight:'Strong Explorer match' },
+  { seg:'Gen X (43–58)',        score:74, c:'var(--slate)', insight:'Moderate receptivity' },
+  { seg:'Boomers (59+)',        score:51, c:'var(--muted)', insight:'Low heat tolerance' },
+  { seg:'Urban Markets',        score:91, c:'var(--sage)',  insight:'Primary opportunity' },
+  { seg:'Suburban Markets',     score:76, c:'var(--amber)', insight:'Secondary growth' },
+];
+
+const AB_VARIANTS = [
+  { v:'A', label:'Original — Yuzu Kosho Aioli',          score:87, winner:true  },
+  { v:'B', label:'With Gochujang Glaze instead',          score:82, winner:false },
+  { v:'C', label:'Add Crispy Shallots',                   score:91, winner:false },
+  { v:'D', label:'Swap Shiso for Thai Basil',             score:79, winner:false },
+  { v:'E', label:'Brioche → Sesame Milk Bun',             score:84, winner:false },
+];
+
+const GEO = [
+  { city:'New York',       score:94, c:'var(--sage)'  },
+  { city:'Los Angeles',    score:91, c:'var(--sage)'  },
+  { city:'San Francisco',  score:89, c:'var(--sage)'  },
+  { city:'Chicago',        score:83, c:'var(--amber)' },
+  { city:'Seattle',        score:88, c:'var(--sage)'  },
+  { city:'Austin',         score:85, c:'var(--amber)' },
+  { city:'Miami',          score:78, c:'var(--amber)' },
+  { city:'Boston',         score:81, c:'var(--amber)' },
+  { city:'Nashville',      score:71, c:'var(--slate)' },
+  { city:'Phoenix',        score:66, c:'var(--slate)' },
+  { city:'Denver',         score:74, c:'var(--slate)' },
+  { city:'Houston',        score:69, c:'var(--slate)' },
+];
+
+const BENCH = [
+  { name:'Yuzu Kosho Chicken (YOU)', tf:87, df:81, type:'you'  },
+  { name:'Karaage Burger',           tf:88, df:76, type:'comp' },
+  { name:'Chili Crisp Chicken Bowl', tf:82, df:84, type:'comp' },
+  { name:'Category Average',         tf:71, df:67, type:'comp' },
+  { name:'Top 10% Benchmark',        tf:93, df:90, type:'top'  },
+  { name:'Korean Fried Chicken',     tf:85, df:86, type:'comp' },
+  { name:'Miso Glazed Chicken',      tf:80, df:73, type:'comp' },
+];
+
+const RISKS = [
+  { icon:'⚠️', label:'Yuzu Kosho supply chain constraints in Q3–Q4', lvl:'med' },
+  { icon:'📈', label:'Trend saturation risk: 12–18 month window before mainstream', lvl:'med' },
+  { icon:'✓',  label:'No ingredient allergen conflicts detected', lvl:'low' },
+  { icon:'⚡', label:'3 competitors testing similar formats (unbranded)', lvl:'high' },
+];
+
+const SUGGESTS = [
+  { name:'Shiso Chicken Bao',      score:88, why:'Similar Explorer fit + high Demand Fit in Asian fusion category' },
+  { name:'Togarashi Fries',        score:82, why:'Adjacent heat profile, lower complexity, faster time-to-menu' },
+  { name:'Citrus Ponzu Bowl',      score:79, why:'Yuzu flavor family, broader demographic appeal' },
+  { name:'Miso Caramel Shake',     score:85, why:'Pairs well as a complementary LTO item — dessert occasion' },
+];
+
+const SCORE_HIST = [
+  { name:'Miso Ramen',        score:85 },
+  { name:'Chili Honey Pizza', score:84 },
+  { name:'Ube Soft Serve',    score:76 },
+  { name:'Ponzu Bowl',        score:79 },
+  { name:'Karaage Slider',    score:81 },
+];
+
+function render() {
+  const c = CONCEPTS[activeIdx];
+  document.getElementById('tfNum').textContent = c.tf;
+  document.getElementById('dfNum').textContent = c.df;
+  document.getElementById('compNum').textContent = c.comp;
+  document.getElementById('compBar').style.width = c.comp + '%';
+  document.getElementById('verdictText').textContent = c.verdict;
+
+  // Gauges
+  const tfDash = 170 - (c.tf / 100) * 155;
+  const dfDash = 170 - (c.df / 100) * 155;
+  document.getElementById('gaugeTF').setAttribute('stroke-dashoffset', tfDash);
+  document.getElementById('gaugeDF').setAttribute('stroke-dashoffset', dfDash);
+
+  renderQueue();
+  renderDemos();
+  renderAB();
+  renderGeo();
+  renderBench();
+  renderRisks();
+  renderSuggests();
+  renderScoreHist();
+  renderSegChips();
+}
+
+function renderQueue() {
+  document.getElementById('conceptQueue').innerHTML = CONCEPTS.map((c,i) => `
+    <div class="concept-card ${i===activeIdx?'':'other'}" onclick="activeIdx=${i};render()">
+      <div class="cc-name">${c.name}</div>
+      <div class="cc-sub">${i===activeIdx?c.sub:'Composite: ' + c.comp}</div>
+      ${i===activeIdx?`<div class="cc-tags">${c.tags.map(t=>`<span class="cc-tag">${t}</span>`).join('')}</div>`:''}
+    </div>
+  `).join('');
+}
+
+function renderDemos() {
+  document.getElementById('demoGrid').innerHTML = DEMOS.map(d => `
+    <div class="demo-seg">
+      <div class="ds-label">${d.seg}</div>
+      <div class="ds-score" style="color:${d.c}">${d.score}</div>
+      <div class="ds-bar-bg"><div class="ds-bar" style="width:${d.score}%;background:${d.c}"></div></div>
+      <div class="ds-insight">${d.insight}</div>
+    </div>
+  `).join('');
+}
+
+function renderAB() {
+  const best = Math.max(...AB_VARIANTS.map(v=>v.score));
+  document.getElementById('abWrap').innerHTML = AB_VARIANTS.map(v => `
+    <div class="ab-row">
+      <div class="ab-variant">${v.v}</div>
+      <div class="ab-label">${v.label}</div>
+      <div class="ab-bar-wrap"><div class="ab-bar-fill" style="width:${v.score}%;background:${v.score===best?'var(--sage)':'var(--slate)'}"></div></div>
+      <div class="ab-score" style="color:${v.score===best?'var(--sage)':'var(--amber)'}">${v.score}</div>
+      ${v.score===best?'<div class="ab-winner">BEST</div>':'<div style="width:34px"></div>'}
+    </div>
+  `).join('');
+}
+
+function renderGeo() {
+  document.getElementById('geoGrid').innerHTML = GEO.map(g => `
+    <div class="geo-card">
+      <div class="gc-city">${g.city}</div>
+      <div class="gc-score" style="color:${g.c}">${g.score}</div>
+      <div class="gc-bar-bg"><div class="gc-bar" style="width:${g.score}%;background:${g.c}"></div></div>
+    </div>
+  `).join('');
+}
+
+function renderBench() {
+  document.getElementById('benchTable').innerHTML = BENCH.map(b => `
+    <div class="bt-row">
+      <div class="bt-name ${b.type==='you'?'highlight':''}">${b.name}</div>
+      <div class="bt-val" style="color:${b.type==='you'?'var(--sage)':b.type==='top'?'var(--amber)':'var(--muted)'}">${b.tf}</div>
+      <div class="bt-val" style="color:${b.type==='you'?'var(--sage)':b.type==='top'?'var(--amber)':'var(--muted)'}">${b.df}</div>
+      <div><span class="bt-tag ${b.type}">${b.type==='you'?'YOU':b.type==='top'?'TOP':'AVG'}</span></div>
+    </div>
+  `).join('');
+}
+
+function renderRisks() {
+  document.getElementById('riskList').innerHTML = RISKS.map(r => `
+    <div class="risk-item">
+      <div class="risk-icon">${r.icon}</div>
+      <div class="risk-label">${r.label}</div>
+      <span class="risk-lvl ${r.lvl}">${r.lvl.toUpperCase()}</span>
+    </div>
+  `).join('');
+}
+
+function renderSuggests() {
+  document.getElementById('suggestList').innerHTML = SUGGESTS.map(s => `
+    <div class="suggest-item">
+      <div class="si-name">${s.name}</div>
+      <div class="si-score">Score: ${s.score}</div>
+      <div class="si-why">${s.why}</div>
+    </div>
+  `).join('');
+}
+
+function renderScoreHist() {
+  document.getElementById('scoreHist').innerHTML = SCORE_HIST.map(s => `
+    <div class="sh-row">
+      <div class="sh-label">${s.name}</div>
+      <div class="sh-bar-bg"><div class="sh-bar" style="width:${s.score}%"></div></div>
+      <div class="sh-val">${s.score}</div>
+    </div>
+  `).join('');
+}
+
+function renderSegChips() {
+  const segs = ['Explorer','Prestige Diner','Millennials','Urban'];
+  document.getElementById('segChips').innerHTML = segs.map(s => `<div class="target-chip">✓ ${s}</div>`).join('');
+}
+
+function cycleConcept() { activeIdx = (activeIdx+1)%CONCEPTS.length; render(); }
+function cycleConceptI() { activeIdx = (activeIdx-1+CONCEPTS.length)%CONCEPTS.length; render(); }
+
+document.querySelectorAll('.tb-mod').forEach(m => m.addEventListener('click', () => {
+  document.querySelectorAll('.tb-mod').forEach(x=>x.classList.remove('active'));
+  m.classList.add('active');
+}));
+
+render();
+</script>
+</body>
+</html>
