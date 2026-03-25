@@ -1,0 +1,439 @@
+{
+  "$metadata": {
+    "tokenSetOrder": [
+      "global/color",
+      "global/typography",
+      "global/spacing",
+      "global/radius",
+      "global/shadow",
+      "global/border",
+      "semantic/color",
+      "component/badge",
+      "component/button",
+      "component/card",
+      "component/input",
+      "component/toggle",
+      "component/nav",
+      "component/alert",
+      "module/perception",
+      "module/validation",
+      "module/foresight",
+      "module/creation",
+      "module/capture",
+      "module/atlas",
+      "theme/dark",
+      "theme/light"
+    ]
+  },
+
+  "global": {
+    "color": {
+      "amber": {
+        "50":  { "$value": "#fdf4e3", "$type": "color", "$description": "Amber tint — lightest" },
+        "100": { "$value": "#fae6bb", "$type": "color" },
+        "200": { "$value": "#f5cc7a", "$type": "color" },
+        "300": { "$value": "#f0b45a", "$type": "color" },
+        "400": { "$value": "#e8a24a", "$type": "color", "$description": "Amber base — primary brand accent (dark theme)" },
+        "500": { "$value": "#d4872a", "$type": "color", "$description": "Amber base — primary brand accent (light theme)" },
+        "600": { "$value": "#b86d18", "$type": "color" },
+        "700": { "$value": "#8c4f0c", "$type": "color" },
+        "bg":  { "$value": "rgba(232, 162, 74, 0.08)", "$type": "color", "$description": "Amber tinted background — dark theme" },
+        "glow":{ "$value": "rgba(232, 162, 74, 0.20)", "$type": "color", "$description": "Amber glow — hover states" }
+      },
+      "terracotta": {
+        "50":  { "$value": "#fdf0ed", "$type": "color" },
+        "100": { "$value": "#f7d0c8", "$type": "color" },
+        "200": { "$value": "#e89484", "$type": "color" },
+        "300": { "$value": "#d4715c", "$type": "color" },
+        "400": { "$value": "#c4604a", "$type": "color", "$description": "Terracotta base — Foresight module / decline signals" },
+        "500": { "$value": "#b04030", "$type": "color", "$description": "Terracotta — light theme" },
+        "600": { "$value": "#8c2e20", "$type": "color" },
+        "bg":  { "$value": "rgba(196, 96, 74, 0.10)", "$type": "color" }
+      },
+      "sage": {
+        "50":  { "$value": "#f0f5ef", "$type": "color" },
+        "100": { "$value": "#d0e3ce", "$type": "color" },
+        "200": { "$value": "#a4c4a0", "$type": "color" },
+        "300": { "$value": "#8aae86", "$type": "color" },
+        "400": { "$value": "#7a9b76", "$type": "color", "$description": "Sage base — Validation module / rising signals" },
+        "500": { "$value": "#4a7a46", "$type": "color", "$description": "Sage — light theme" },
+        "600": { "$value": "#325a2e", "$type": "color" },
+        "bg":  { "$value": "rgba(122, 155, 118, 0.10)", "$type": "color" }
+      },
+      "slate": {
+        "50":  { "$value": "#edf2f6", "$type": "color" },
+        "100": { "$value": "#c8dae5", "$type": "color" },
+        "200": { "$value": "#96b8cc", "$type": "color" },
+        "300": { "$value": "#7da2b6", "$type": "color" },
+        "400": { "$value": "#6a8a9f", "$type": "color", "$description": "Slate base — Creation module / neutral signals" },
+        "500": { "$value": "#3a6a7f", "$type": "color", "$description": "Slate — light theme" },
+        "600": { "$value": "#244e61", "$type": "color" },
+        "bg":  { "$value": "rgba(106, 138, 159, 0.10)", "$type": "color" }
+      },
+      "plum": {
+        "50":  { "$value": "#f4eef9", "$type": "color" },
+        "100": { "$value": "#ddc8ef", "$type": "color" },
+        "200": { "$value": "#be9add", "$type": "color" },
+        "300": { "$value": "#aa80cc", "$type": "color" },
+        "400": { "$value": "#9b6eb5", "$type": "color", "$description": "Plum base — Capture layer / new signals" },
+        "500": { "$value": "#6a3e8a", "$type": "color", "$description": "Plum — light theme" },
+        "600": { "$value": "#4e2868", "$type": "color" },
+        "bg":  { "$value": "rgba(155, 110, 181, 0.10)", "$type": "color" }
+      },
+      "meal": {
+        "400": { "$value": "#d4845a", "$type": "color", "$description": "Meal Ticket / warm orange accent" },
+        "500": { "$value": "#b8622e", "$type": "color" },
+        "bg":  { "$value": "rgba(212, 132, 90, 0.10)", "$type": "color" }
+      },
+      "neutral": {
+        "0":   { "$value": "#ffffff", "$type": "color" },
+        "50":  { "$value": "#faf8f4", "$type": "color", "$description": "Light theme — page background" },
+        "100": { "$value": "#f4f0ea", "$type": "color", "$description": "Light theme — surface 1" },
+        "150": { "$value": "#ede8df", "$type": "color", "$description": "Light theme — surface 2" },
+        "200": { "$value": "#e0d9ce", "$type": "color" },
+        "300": { "$value": "#c8bfb0", "$type": "color", "$description": "Dark theme — body text" },
+        "400": { "$value": "#8a8078", "$type": "color" },
+        "500": { "$value": "#6b6459", "$type": "color", "$description": "Muted text — both themes" },
+        "600": { "$value": "#4a4440", "$type": "color" },
+        "700": { "$value": "#3d3730", "$type": "color", "$description": "Light theme — primary text" },
+        "800": { "$value": "#2c2820", "$type": "color", "$description": "Dark theme — surface 4" },
+        "850": { "$value": "#22201a", "$type": "color", "$description": "Dark theme — surface 3" },
+        "900": { "$value": "#1a1812", "$type": "color", "$description": "Dark theme — surface 2" },
+        "925": { "$value": "#131109", "$type": "color", "$description": "Dark theme — surface 1 / topbar" },
+        "950": { "$value": "#0c0b09", "$type": "color", "$description": "Dark theme — page background" },
+        "cream": { "$value": "#f0e8d8", "$type": "color", "$description": "Dark theme — headline / display text" }
+      }
+    },
+
+    "typography": {
+      "fontFamily": {
+        "display": { "$value": "'Styrene B', 'Georgia', serif",    "$type": "fontFamilies", "$description": "Hero headlines, logo wordmark, large pull-quotes, dashboard title lines" },
+        "heading":  { "$value": "'Poppins', sans-serif",           "$type": "fontFamilies", "$description": "UI labels, buttons, stats, badges, section headers, card titles, score values" },
+        "body":     { "$value": "'Inter', sans-serif",             "$type": "fontFamilies", "$description": "Body text, descriptions, table cells, nav items, tooltips, status bars" }
+      },
+      "fontWeight": {
+        "light":    { "$value": 300, "$type": "fontWeights" },
+        "regular":  { "$value": 400, "$type": "fontWeights" },
+        "medium":   { "$value": 500, "$type": "fontWeights" },
+        "semibold": { "$value": 600, "$type": "fontWeights" },
+        "bold":     { "$value": 700, "$type": "fontWeights" },
+        "extrabold":{ "$value": 800, "$type": "fontWeights" }
+      },
+      "fontSize": {
+        "9":  { "$value": "9px",  "$type": "fontSizes", "$description": "Eyebrow labels, uppercase badges, mini captions" },
+        "10": { "$value": "10px", "$type": "fontSizes", "$description": "Secondary labels, how-to-read text, alert meta" },
+        "11": { "$value": "11px", "$type": "fontSizes", "$description": "Body text, card descriptions, table cells" },
+        "12": { "$value": "12px", "$type": "fontSizes", "$description": "Section body, panel descriptions" },
+        "13": { "$value": "13px", "$type": "fontSizes", "$description": "Card titles (Poppins), concept names" },
+        "14": { "$value": "14px", "$type": "fontSizes", "$description": "Archetype names, module subtitles" },
+        "16": { "$value": "16px", "$type": "fontSizes", "$description": "Nav logo, score inputs, scale numbers" },
+        "18": { "$value": "18px", "$type": "fontSizes", "$description": "Section titles (Poppins), seat card price" },
+        "20": { "$value": "20px", "$type": "fontSizes", "$description": "Seat card prices, KPI secondary" },
+        "22": { "$value": "22px", "$type": "fontSizes", "$description": "KPI main value, composite number" },
+        "26": { "$value": "26px", "$type": "fontSizes", "$description": "Page header title (Styrene B)" },
+        "28": { "$value": "28px", "$type": "fontSizes", "$description": "Gauge score number, API stats" },
+        "32": { "$value": "32px", "$type": "fontSizes", "$description": "Section title (Styrene B)" },
+        "38": { "$value": "38px", "$type": "fontSizes", "$description": "Problem statement headline" },
+        "44": { "$value": "44px", "$type": "fontSizes", "$description": "Closing slide quote (Styrene B)" },
+        "56": { "$value": "56px", "$type": "fontSizes", "$description": "Composite hero score" },
+        "60": { "$value": "60px", "$type": "fontSizes", "$description": "Index page hero (Styrene B)" },
+        "76": { "$value": "76px", "$type": "fontSizes", "$description": "Dashboard cover title (Styrene B)" }
+      },
+      "lineHeight": {
+        "tight":    { "$value": 1.0,  "$type": "lineHeights", "$description": "Hero headlines" },
+        "snug":     { "$value": 1.2,  "$type": "lineHeights", "$description": "Display text, card titles" },
+        "normal":   { "$value": 1.4,  "$type": "lineHeights", "$description": "UI labels" },
+        "relaxed":  { "$value": 1.5,  "$type": "lineHeights", "$description": "Body text default" },
+        "loose":    { "$value": 1.6,  "$type": "lineHeights", "$description": "Long-form descriptions" },
+        "spacious":  { "$value": 1.8,  "$type": "lineHeights", "$description": "Hero sub-text, index body" }
+      },
+      "letterSpacing": {
+        "tight":    { "$value": "-0.02em", "$type": "letterSpacing", "$description": "Display headlines (Styrene B)" },
+        "normal":   { "$value": "-0.01em", "$type": "letterSpacing", "$description": "Inter body default" },
+        "wide":     { "$value": "0.04em",  "$type": "letterSpacing", "$description": "Logo wordmark" },
+        "wider":    { "$value": "0.08em",  "$type": "letterSpacing", "$description": "Badges, tags" },
+        "widest":   { "$value": "0.16em",  "$type": "letterSpacing", "$description": "Eyebrow labels (uppercase)" },
+        "ultra":    { "$value": "0.20em",  "$type": "letterSpacing", "$description": "Hero eyebrow, section labels" }
+      }
+    },
+
+    "spacing": {
+      "0":   { "$value": "0px",   "$type": "spacing" },
+      "1":   { "$value": "2px",   "$type": "spacing" },
+      "2":   { "$value": "4px",   "$type": "spacing" },
+      "3":   { "$value": "6px",   "$type": "spacing" },
+      "4":   { "$value": "8px",   "$type": "spacing" },
+      "5":   { "$value": "10px",  "$type": "spacing" },
+      "6":   { "$value": "12px",  "$type": "spacing" },
+      "7":   { "$value": "14px",  "$type": "spacing" },
+      "8":   { "$value": "16px",  "$type": "spacing", "$description": "Base unit — card padding" },
+      "9":   { "$value": "18px",  "$type": "spacing" },
+      "10":  { "$value": "20px",  "$type": "spacing" },
+      "12":  { "$value": "24px",  "$type": "spacing", "$description": "Content column padding" },
+      "14":  { "$value": "28px",  "$type": "spacing" },
+      "16":  { "$value": "32px",  "$type": "spacing" },
+      "18":  { "$value": "36px",  "$type": "spacing", "$description": "Page content padding" },
+      "20":  { "$value": "40px",  "$type": "spacing" },
+      "24":  { "$value": "48px",  "$type": "spacing", "$description": "Page horizontal padding" },
+      "28":  { "$value": "56px",  "$type": "spacing" },
+      "30":  { "$value": "60px",  "$type": "spacing", "$description": "Page top padding" },
+      "36":  { "$value": "72px",  "$type": "spacing" },
+      "40":  { "$value": "80px",  "$type": "spacing", "$description": "Section bottom margin" }
+    },
+
+    "radius": {
+      "none":   { "$value": "0px",  "$type": "borderRadius", "$description": "All dashboard panels — sharp edges by design" },
+      "sm":     { "$value": "2px",  "$type": "borderRadius", "$description": "Badges, tags, small chips" },
+      "md":     { "$value": "4px",  "$type": "borderRadius", "$description": "Buttons, concept cards (mobile)" },
+      "lg":     { "$value": "8px",  "$type": "borderRadius", "$description": "Meal Ticket dish emoji boxes" },
+      "full":   { "$value": "9999px","$type": "borderRadius", "$description": "Pill tags, geo filters, toggles, avatars" }
+    },
+
+    "shadow": {
+      "none":   { "$value": "none", "$type": "boxShadow" },
+      "xs":     { "$value": "0 1px 3px rgba(0,0,0,0.04)", "$type": "boxShadow", "$description": "Light theme card default" },
+      "sm":     { "$value": "0 1px 4px rgba(0,0,0,0.06)", "$type": "boxShadow" },
+      "md":     { "$value": "0 3px 10px rgba(0,0,0,0.08)", "$type": "boxShadow", "$description": "Light theme card hover" },
+      "lg":     { "$value": "0 8px 20px rgba(0,0,0,0.10)", "$type": "boxShadow", "$description": "Meal Ticket rec card hover" },
+      "device": { "$value": "0 40px 80px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.15)", "$type": "boxShadow", "$description": "Meal Ticket phone shell" }
+    },
+
+    "border": {
+      "width": {
+        "hairline": { "$value": "1px", "$type": "borderWidths" },
+        "thick":    { "$value": "2px", "$type": "borderWidths" },
+        "accent":   { "$value": "3px", "$type": "borderWidths", "$description": "Left accent border on purpose boxes and insight cards" },
+        "top":      { "$value": "2px", "$type": "borderWidths", "$description": "Top accent bar on module cards" }
+      },
+      "color": {
+        "dark-default":  { "$value": "rgba(255,255,255,0.07)", "$type": "color", "$description": "Default border — dark theme" },
+        "dark-subtle":   { "$value": "rgba(255,255,255,0.04)", "$type": "color", "$description": "Subtle divider — dark theme" },
+        "light-default": { "$value": "rgba(0,0,0,0.08)",       "$type": "color", "$description": "Default border — light theme" },
+        "light-subtle":  { "$value": "rgba(0,0,0,0.05)",       "$type": "color", "$description": "Subtle divider — light theme" }
+      }
+    }
+  },
+
+  "semantic": {
+    "color": {
+      "signal": {
+        "rising":   { "$value": "{global.color.sage.400}",        "$type": "color", "$description": "Rising / positive trend signal" },
+        "declining":{ "$value": "{global.color.terracotta.400}",  "$type": "color", "$description": "Declining trend signal" },
+        "neutral":  { "$value": "{global.color.slate.400}",       "$type": "color", "$description": "Stable / neutral signal" },
+        "new":      { "$value": "{global.color.plum.400}",        "$type": "color", "$description": "First-detection signal" },
+        "surge":    { "$value": "{global.color.sage.400}",        "$type": "color" },
+        "spike":    { "$value": "{global.color.terracotta.400}",  "$type": "color" },
+        "crossover":{ "$value": "{global.color.amber.400}",       "$type": "color" }
+      },
+      "score": {
+        "exceptional": { "$value": "{global.color.sage.400}",       "$type": "color", "$description": "Score 90–100" },
+        "strong":      { "$value": "{global.color.amber.400}",      "$type": "color", "$description": "Score 80–89" },
+        "average":     { "$value": "{global.color.amber.400}",      "$type": "color", "$description": "Score 70–79" },
+        "below":       { "$value": "{global.color.slate.400}",      "$type": "color", "$description": "Score 60–69" },
+        "weak":        { "$value": "{global.color.terracotta.400}", "$type": "color", "$description": "Score 0–59" }
+      },
+      "status": {
+        "online":      { "$value": "{global.color.sage.400}",       "$type": "color" },
+        "away":        { "$value": "{global.color.amber.400}",      "$type": "color" },
+        "offline":     { "$value": "{global.color.neutral.500}",    "$type": "color" },
+        "connected":   { "$value": "{global.color.sage.400}",       "$type": "color" },
+        "pending":     { "$value": "{global.color.amber.400}",      "$type": "color" },
+        "disconnected":{ "$value": "{global.color.neutral.500}",    "$type": "color" }
+      },
+      "risk": {
+        "high":   { "$value": "{global.color.terracotta.400}", "$type": "color" },
+        "medium": { "$value": "{global.color.amber.400}",      "$type": "color" },
+        "low":    { "$value": "{global.color.sage.400}",       "$type": "color" }
+      },
+      "watchlist": {
+        "act":     { "$value": "{global.color.sage.400}",   "$type": "color", "$description": "Act — move now" },
+        "watch":   { "$value": "{global.color.amber.400}",  "$type": "color", "$description": "Watch — 3–6 months" },
+        "monitor": { "$value": "{global.color.slate.400}",  "$type": "color", "$description": "Monitor — periodic check-in" }
+      }
+    }
+  },
+
+  "component": {
+    "badge": {
+      "height":       { "$value": "18px",   "$type": "sizing" },
+      "paddingX":     { "$value": "6px",    "$type": "spacing" },
+      "paddingY":     { "$value": "2px",    "$type": "spacing" },
+      "fontSize":     { "$value": "{global.typography.fontSize.9}", "$type": "fontSizes" },
+      "fontFamily":   { "$value": "{global.typography.fontFamily.heading}", "$type": "fontFamilies" },
+      "fontWeight":   { "$value": "{global.typography.fontWeight.bold}", "$type": "fontWeights" },
+      "letterSpacing":{ "$value": "{global.typography.letterSpacing.wider}", "$type": "letterSpacing" },
+      "radius":       { "$value": "{global.radius.sm}", "$type": "borderRadius" }
+    },
+    "button": {
+      "height":       { "$value": "32px",   "$type": "sizing" },
+      "heightSm":     { "$value": "26px",   "$type": "sizing" },
+      "paddingX":     { "$value": "14px",   "$type": "spacing" },
+      "paddingXSm":   { "$value": "10px",   "$type": "spacing" },
+      "fontSize":     { "$value": "{global.typography.fontSize.10}", "$type": "fontSizes" },
+      "fontFamily":   { "$value": "{global.typography.fontFamily.heading}", "$type": "fontFamilies" },
+      "fontWeight":   { "$value": "{global.typography.fontWeight.bold}", "$type": "fontWeights" },
+      "letterSpacing":{ "$value": "{global.typography.letterSpacing.wider}", "$type": "letterSpacing" },
+      "radius":       { "$value": "{global.radius.none}", "$type": "borderRadius" },
+      "primary": {
+        "background": { "$value": "{global.color.amber.400}", "$type": "color" },
+        "color":      { "$value": "{global.color.neutral.950}", "$type": "color" }
+      },
+      "ghost": {
+        "background": { "$value": "transparent", "$type": "color" },
+        "border":     { "$value": "{global.border.color.dark-default}", "$type": "color" },
+        "color":      { "$value": "{global.color.neutral.500}", "$type": "color" }
+      },
+      "danger": {
+        "background": { "$value": "transparent", "$type": "color" },
+        "border":     { "$value": "{global.color.terracotta.bg}", "$type": "color" },
+        "color":      { "$value": "{global.color.terracotta.400}", "$type": "color" }
+      }
+    },
+    "card": {
+      "padding":      { "$value": "{global.spacing.8}", "$type": "spacing" },
+      "paddingLg":    { "$value": "{global.spacing.10}", "$type": "spacing" },
+      "radius":       { "$value": "{global.radius.none}", "$type": "borderRadius" },
+      "gap":          { "$value": "{global.spacing.3}", "$type": "spacing" },
+      "accentWidth":  { "$value": "{global.border.width.top}", "$type": "borderWidths", "$description": "Top accent colour bar on module/concept cards" },
+      "leftAccentWidth":{ "$value": "{global.border.width.accent}", "$type": "borderWidths", "$description": "Left accent bar on insight/purpose cards" }
+    },
+    "input": {
+      "height":       { "$value": "32px",  "$type": "sizing" },
+      "paddingX":     { "$value": "10px",  "$type": "spacing" },
+      "paddingY":     { "$value": "7px",   "$type": "spacing" },
+      "fontSize":     { "$value": "{global.typography.fontSize.11}", "$type": "fontSizes" },
+      "fontFamily":   { "$value": "{global.typography.fontFamily.body}", "$type": "fontFamilies" },
+      "radius":       { "$value": "{global.radius.none}", "$type": "borderRadius" },
+      "background-dark":  { "$value": "{global.color.neutral.900}", "$type": "color" },
+      "background-light": { "$value": "{global.color.neutral.100}", "$type": "color" },
+      "border-default":   { "$value": "{global.border.color.dark-default}", "$type": "color" },
+      "border-focus":     { "$value": "{global.color.amber.400}", "$type": "color" }
+    },
+    "toggle": {
+      "width":        { "$value": "36px",  "$type": "sizing" },
+      "height":       { "$value": "20px",  "$type": "sizing" },
+      "thumbSize":    { "$value": "14px",  "$type": "sizing" },
+      "radius":       { "$value": "10px",  "$type": "borderRadius" },
+      "activeColor":  { "$value": "{global.color.amber.400}", "$type": "color" },
+      "inactiveColor":{ "$value": "{global.color.neutral.850}", "$type": "color" }
+    },
+    "nav": {
+      "topbarHeight": { "$value": "48px", "$type": "sizing" },
+      "sidebarWidth": { "$value": "200px","$type": "sizing" },
+      "rightPanelWidth":{ "$value": "280px","$type": "sizing" },
+      "rightPanelWidthLg":{ "$value": "320px","$type": "sizing" },
+      "leftPanelWidth": { "$value": "260px","$type": "sizing" },
+      "leftPanelWidthLg":{ "$value": "300px","$type": "sizing" },
+      "tabHeight":    { "$value": "48px", "$type": "sizing" },
+      "tabFontSize":  { "$value": "{global.typography.fontSize.10}", "$type": "fontSizes" },
+      "tabFontFamily":{ "$value": "{global.typography.fontFamily.body}", "$type": "fontFamilies" },
+      "tabLetterSpacing":{ "$value": "{global.typography.letterSpacing.widest}", "$type": "letterSpacing" }
+    },
+    "alert": {
+      "iconSize":     { "$value": "28px", "$type": "sizing" },
+      "iconRadius":   { "$value": "{global.radius.sm}", "$type": "borderRadius" },
+      "titleSize":    { "$value": "{global.typography.fontSize.11}", "$type": "fontSizes" },
+      "metaSize":     { "$value": "{global.typography.fontSize.9}",  "$type": "fontSizes" }
+    }
+  },
+
+  "module": {
+    "perception": {
+      "color":      { "$value": "{global.color.amber.400}", "$type": "color" },
+      "colorLight": { "$value": "{global.color.amber.500}", "$type": "color" },
+      "bg":         { "$value": "{global.color.amber.bg}",  "$type": "color" },
+      "icon":       { "$value": "👁",  "$type": "other" },
+      "label":      { "$value": "PERCEPTION", "$type": "other" },
+      "role":       { "$value": "Real-Time Taste Signals", "$type": "other" },
+      "question":   { "$value": "What is happening?", "$type": "other" },
+      "buyer":      { "$value": "Strategy / Insights", "$type": "other" }
+    },
+    "validation": {
+      "color":      { "$value": "{global.color.sage.400}", "$type": "color" },
+      "colorLight": { "$value": "{global.color.sage.500}", "$type": "color" },
+      "bg":         { "$value": "{global.color.sage.bg}",  "$type": "color" },
+      "icon":       { "$value": "✓",   "$type": "other" },
+      "label":      { "$value": "VALIDATION", "$type": "other" },
+      "role":       { "$value": "Concept & Menu Testing", "$type": "other" },
+      "question":   { "$value": "Will this work?", "$type": "other" },
+      "buyer":      { "$value": "Product / Ops", "$type": "other" }
+    },
+    "foresight": {
+      "color":      { "$value": "{global.color.terracotta.400}", "$type": "color" },
+      "colorLight": { "$value": "{global.color.terracotta.500}", "$type": "color" },
+      "bg":         { "$value": "{global.color.terracotta.bg}",  "$type": "color" },
+      "icon":       { "$value": "◈",   "$type": "other" },
+      "label":      { "$value": "FORESIGHT", "$type": "other" },
+      "role":       { "$value": "Predictive Intelligence", "$type": "other" },
+      "question":   { "$value": "What will happen?", "$type": "other" },
+      "buyer":      { "$value": "Exec / Strategy", "$type": "other" }
+    },
+    "creation": {
+      "color":      { "$value": "{global.color.slate.400}", "$type": "color" },
+      "colorLight": { "$value": "{global.color.slate.500}", "$type": "color" },
+      "bg":         { "$value": "{global.color.slate.bg}",  "$type": "color" },
+      "icon":       { "$value": "⬡",   "$type": "other" },
+      "label":      { "$value": "CREATION", "$type": "other" },
+      "role":       { "$value": "Product Simulation", "$type": "other" },
+      "question":   { "$value": "What should we build?", "$type": "other" },
+      "buyer":      { "$value": "R&D / Innovation", "$type": "other" }
+    },
+    "capture": {
+      "color":      { "$value": "{global.color.plum.400}", "$type": "color" },
+      "colorLight": { "$value": "{global.color.plum.500}", "$type": "color" },
+      "bg":         { "$value": "{global.color.plum.bg}",  "$type": "color" },
+      "icon":       { "$value": "📡",  "$type": "other" },
+      "label":      { "$value": "CAPTURE", "$type": "other" },
+      "role":       { "$value": "Event & Operator Data Acquisition", "$type": "other" }
+    },
+    "atlas": {
+      "color":      { "$value": "{global.color.meal.400}", "$type": "color" },
+      "colorLight": { "$value": "{global.color.meal.500}", "$type": "color" },
+      "bg":         { "$value": "{global.color.meal.bg}",  "$type": "color" },
+      "icon":       { "$value": "🗺️",  "$type": "other" },
+      "label":      { "$value": "ATLAS", "$type": "other" },
+      "role":       { "$value": "Knowledge Graph", "$type": "other" }
+    }
+  },
+
+  "theme": {
+    "dark": {
+      "background": {
+        "page":     { "$value": "{global.color.neutral.950}", "$type": "color" },
+        "surface1": { "$value": "{global.color.neutral.925}", "$type": "color", "$description": "Topbar, sidebar, right panel" },
+        "surface2": { "$value": "{global.color.neutral.900}", "$type": "color", "$description": "Cards, table rows" },
+        "surface3": { "$value": "{global.color.neutral.850}", "$type": "color", "$description": "Input fields, tag backgrounds" },
+        "surface4": { "$value": "{global.color.neutral.800}", "$type": "color", "$description": "Hover states, selected rows" }
+      },
+      "text": {
+        "primary":  { "$value": "{global.color.neutral.cream}", "$type": "color", "$description": "Headlines, card titles" },
+        "secondary":{ "$value": "{global.color.neutral.300}",   "$type": "color", "$description": "Body text, descriptions" },
+        "tertiary": { "$value": "{global.color.neutral.500}",   "$type": "color", "$description": "Muted labels, captions, placeholders" }
+      },
+      "border": {
+        "default":  { "$value": "{global.border.color.dark-default}", "$type": "color" },
+        "subtle":   { "$value": "{global.border.color.dark-subtle}",  "$type": "color" }
+      },
+      "accent":     { "$value": "{global.color.amber.400}", "$type": "color" }
+    },
+    "light": {
+      "background": {
+        "page":     { "$value": "{global.color.neutral.50}",  "$type": "color" },
+        "surface1": { "$value": "{global.color.neutral.0}",   "$type": "color", "$description": "Cards, topbar, panels" },
+        "surface2": { "$value": "{global.color.neutral.100}", "$type": "color", "$description": "Alternate rows, tag backgrounds" },
+        "surface3": { "$value": "{global.color.neutral.150}", "$type": "color", "$description": "Input fields, subtle fills" },
+        "surface4": { "$value": "{global.color.neutral.200}", "$type": "color", "$description": "Hover states, dividers" }
+      },
+      "text": {
+        "primary":  { "$value": "{global.color.neutral.700}", "$type": "color", "$description": "Headlines, titles" },
+        "secondary":{ "$value": "{global.color.neutral.700}", "$type": "color", "$description": "Body text" },
+        "tertiary": { "$value": "{global.color.neutral.400}", "$type": "color", "$description": "Muted labels, captions" }
+      },
+      "border": {
+        "default":  { "$value": "{global.border.color.light-default}", "$type": "color" },
+        "subtle":   { "$value": "{global.border.color.light-subtle}",  "$type": "color" }
+      },
+      "accent":     { "$value": "{global.color.amber.500}", "$type": "color" }
+    }
+  }
+}
